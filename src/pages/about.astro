@@ -13,21 +13,43 @@ import { SITE_TITLE } from '../consts';
 			main {
 				width: 960px;
 			}
-			.coming-soon {
-				text-align: center;
-				padding: 4rem 0;
+			.about-content {
+				padding: 2rem 0;
+				line-height: 1.8;
 			}
-			.coming-soon h1 {
-				font-size: 3rem;
-				color: rgb(var(--gray-dark));
+			.about-content p {
+				margin-bottom: 1.5rem;
+			}
+			.contact {
+				margin-top: 3rem;
+				padding-top: 2rem;
+				border-top: 1px solid rgb(var(--gray-light));
+			}
+			.contact h2 {
+				margin-bottom: 1rem;
+			}
+			.contact p {
+				margin-bottom: 0.5rem;
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<div class="coming-soon">
-				<h1>Coming Soon</h1>
+			<div class="about-content">
+				<p>I am a software engineer with a sustained interest in ethics. My personal studies sit at the intersection of technology and governance, where I explore questions of authorship, ownership, and accountability in the age of AI.</p>
+
+				<p>My path into this work was not linear. A decade ago, I was drawn to the startup ethos of speed and disruption. Working in industry complicated that view. I came to understand that constraints surrounding personal information, financial systems, and public trust are not limitations but necessities. I saw how decisions framed as purely technical often carry governance consequences, and how time pressure can push ethical considerations to the margins.</p>
+
+				<p>That tension between velocity and stewardship is what motivates me now. I want to deepen my foundations in computer science while studying the humanities and governance questions that shape how systems are built, regulated, and understood. I am particularly interested in how ethical commitments can be operationalized in software by translating them into technical and institutional design so that accountability becomes core engineering work rather than an afterthought.</p>
+
+				<p>Outside of my academic and professional work, I collaborate on long form fiction writing and serve as an appointed commissioner on my town's Parks and Recreation Commission.</p>
+
+				<div class="contact">
+					<h2>Contact</h2>
+					<p>Email: <a href="mailto:nicholasdipreta@gmail.com">nicholasdipreta@gmail.com</a></p>
+					<p>LinkedIn: <a href="https://www.linkedin.com/in/nicholas-dipreta" target="_blank" rel="noopener noreferrer">nicholas-dipreta</a></p>
+				</div>
 			</div>
 		</main>
 		<Footer />

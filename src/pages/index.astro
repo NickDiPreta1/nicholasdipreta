@@ -9,27 +9,73 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				max-width: 900px;
+				margin: 0 auto;
+				padding: 2rem 1rem;
+			}
+			.hero {
+				margin-bottom: 2.5rem;
+			}
+			.hero h1 {
+				margin-bottom: 0.75rem;
+				font-size: 2.5rem;
+			}
+			.hero .subtitle {
+				margin-bottom: 1rem;
+				font-size: 1.1rem;
+				color: rgb(var(--gray-dark));
+			}
+			.hero .tagline {
+				color: rgb(var(--gray-dark));
+				line-height: 1.6;
+			}
+			.orientation {
+				margin-bottom: 1.5rem;
+				line-height: 1.8;
+			}
+			.next-steps {
+				margin-bottom: 3rem;
+			}
+			.link-item {
+				margin-bottom: 1.5rem;
+			}
+			.link-item a {
+				font-size: 1.1rem;
+				font-weight: 600;
+			}
+			.link-item .description {
+				margin-top: 0.5rem;
+				color: rgb(var(--gray));
+				line-height: 1.6;
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>Nicholas DiPreta</h1>
+			<section class="hero">
+				<h1>Nick DiPreta</h1>
+				<p class="subtitle">Software engineer studying ethical responsibility in software systems</p>
+				<p class="tagline">I write about how design decisions in software and AI shape accountability, redistribute risk, and influence real world outcomes.</p>
+			</section>
 
-			<p>
-				I'm a software engineer with an interest in ethics. My personal studies sit at the intersection of technology and governance, exploring questions of authorship, ownership, and accountability in the age of AI.
-			</p>
+			<section class="orientation">
+				<p>I study technology as a form of governance. This site is a place to develop case based analyses of software failures and to think more carefully about how ethical responsibility gets embedded, deferred, or obscured in technical systems.</p>
+			</section>
 
-			<p>
-				My path into this work wasn't linear. A decade ago, I admired the startup ethos of speed and disruption. Working in industry complicated that view. I learned that constraints around personal information, financial systems, and public trust aren't limitations—they're essential. I saw how decisions framed as "technical" often carry governance consequences, and how time pressure can push ethical considerations to the margins.
-			</p>
+			<section class="next-steps">
+				<div class="link-item">
+					<a href="/blog/on-responsibility-in-software">Introduction: Studying Ethical Responsibility in Software</a>
+					<p class="description">An overview of what this blog is about and how I plan to approach it.</p>
+				</div>
 
-			<p>
-				That tension between velocity and stewardship is what drives me now. I want to deepen my computer science foundations while studying the humanities and governance questions that determine how systems should be built, regulated, and understood. I'm particularly interested in how ethical commitments can be operationalized in software—translated into technical and institutional design so that accountability is core engineering work, not an afterthought.
-			</p>
-
-			<p>
-				Outside of my studies and work, I collaborate on long-form fiction writing and serve as an appointed commissioner on my town's Parks & Recreation Commission.
-			</p>
+				<div class="link-item">
+					<a href="/about">About</a>
+					<p class="description">Background, interests, and what I am working on.</p>
+				</div>
+			</section>
 		</main>
 		<Footer />
 	</body>
