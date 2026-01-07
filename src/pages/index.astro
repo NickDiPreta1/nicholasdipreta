@@ -50,6 +50,32 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				color: rgb(var(--gray));
 				line-height: 1.6;
 			}
+
+			/* Mobile responsive styles */
+			@media (max-width: 720px) {
+				main {
+					padding: 1.5rem 1rem;
+				}
+				.hero h1 {
+					font-size: 1.75rem;
+				}
+				.hero .subtitle {
+					font-size: 1rem;
+				}
+				.hero .tagline {
+					font-size: 0.95rem;
+				}
+				.orientation {
+					font-size: 0.95rem;
+					margin-bottom: 1.25rem;
+				}
+				.link-item a {
+					font-size: 1rem;
+				}
+				.link-item .description {
+					font-size: 0.9rem;
+				}
+			}
 		</style>
 	</head>
 	<body>

@@ -11,7 +11,10 @@ import { SITE_TITLE } from '../consts';
 		<BaseHead title={`About | ${SITE_TITLE}`} description="About page" />
 		<style>
 			main {
-				width: 960px;
+				max-width: 960px;
+				width: calc(100% - 2em);
+				margin: auto;
+				padding: 3em 1em;
 			}
 			.about-content {
 				padding: 2rem 0;
