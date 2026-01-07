@@ -58,7 +58,9 @@ const posts = (await getCollection('blog')).sort(
 			.title {
 				margin: 0;
 				color: rgb(var(--black));
-				line-height: 1;
+				line-height: 1.2;
+				hyphens: auto;
+				-webkit-hyphens: auto;
 			}
 			.date {
 				margin: 0;
@@ -72,6 +74,9 @@ const posts = (await getCollection('blog')).sort(
 				box-shadow: var(--box-shadow);
 			}
 			@media (max-width: 720px) {
+				main {
+					padding: 2em 0.5em;
+				}
 				ul {
 					gap: 0.5em;
 				}
@@ -83,7 +88,7 @@ const posts = (await getCollection('blog')).sort(
 					margin-bottom: 0;
 				}
 				ul li:first-child .title {
-					font-size: 1.563em;
+					font-size: 1.25em;
 				}
 			}
 		</style>
