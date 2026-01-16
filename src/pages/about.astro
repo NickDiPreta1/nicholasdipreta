@@ -37,9 +37,12 @@ import { SITE_TITLE } from '../consts';
 				color: rgb(var(--gray-dark));
 			}
 
-			.about-content > p:first-of-type {
-				font-size: 1.1rem;
+			.intro {
+				font-size: 1.15rem;
 				color: rgb(var(--black));
+				padding-bottom: 1.75rem;
+				margin-bottom: 1.75rem;
+				border-bottom: 1px solid var(--border-subtle);
 			}
 
 			.contact {
@@ -76,7 +79,7 @@ import { SITE_TITLE } from '../consts';
 				main::before {
 					font-size: 2rem;
 				}
-				.about-content > p:first-of-type {
+				.intro {
 					font-size: 1rem;
 				}
 				.contact {
@@ -90,7 +93,7 @@ import { SITE_TITLE } from '../consts';
 		<Header />
 		<main>
 			<div class="about-content">
-				<p>I am a software engineer with a sustained interest in ethics. My personal studies sit at the intersection of technology and governance, where I explore questions of authorship, ownership, and accountability in the age of AI.</p>
+				<p class="intro">I am a software engineer with a sustained interest in ethics. My personal studies sit at the intersection of technology and governance, where I explore questions of authorship, ownership, and accountability in the age of AI.</p>
 
 				<p>My path into this work was not linear. A decade ago, I was drawn to the startup ethos of speed and disruption. Working in industry complicated that view. I came to understand that constraints surrounding personal information, financial systems, and public trust are not limitations but necessities. I saw how decisions framed as purely technical often carry governance consequences, and how time pressure can push ethical considerations to the margins.</p>
 

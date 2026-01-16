@@ -37,30 +37,19 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				margin-bottom: 1.25rem;
 				font-size: 1.2rem;
 				font-weight: 500;
-				color: var(--accent);
+				color: rgb(var(--black));
 				letter-spacing: -0.01em;
 			}
 
-			.hero .tagline {
+			.hero p {
 				color: rgb(var(--gray-dark));
 				line-height: 1.7;
 				font-size: 1.05rem;
-				max-width: 640px;
+				margin-bottom: 1rem;
 			}
 
-			/* Orientation section - Secondary */
-			.orientation {
-				margin-bottom: 2.5rem;
-				padding: 1.5rem;
-				background: var(--accent-subtle);
-				border-radius: 12px;
-				border-left: 4px solid var(--accent);
-			}
-
-			.orientation p {
-				margin: 0;
-				line-height: 1.8;
-				color: rgb(var(--gray-dark));
+			.hero p:last-child {
+				margin-bottom: 0;
 			}
 
 			/* Next steps section - Featured links */
@@ -136,14 +125,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				.hero .subtitle {
 					font-size: 1rem;
 				}
-				.hero .tagline {
-					font-size: 0.95rem;
-				}
-				.orientation {
-					padding: 1.25rem;
-					margin-bottom: 2rem;
-				}
-				.orientation p {
+				.hero p {
 					font-size: 0.95rem;
 				}
 				.link-item {
@@ -164,10 +146,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			<section class="hero">
 				<h1>Nick DiPreta</h1>
 				<p class="subtitle">Software engineer studying ethical responsibility in software systems</p>
-				<p class="tagline">I write about how design decisions in software and AI shape accountability, redistribute risk, and influence real world outcomes.</p>
-			</section>
-
-			<section class="orientation">
+				<p>I write about how design decisions in software and AI shape accountability, redistribute risk, and influence real world outcomes.</p>
 				<p>I study technology as a form of governance. This site is a place to develop case based analyses of software failures and to think more carefully about how ethical responsibility gets embedded, deferred, or obscured in technical systems.</p>
 			</section>
 
