@@ -12,54 +12,126 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<style>
 			main {
 				max-width: 900px;
+				width: 100%;
 				margin: 0 auto;
-				padding: 2rem 1rem;
+				padding: 3rem 1.5rem;
 			}
+
+			/* Hero section - Primary focus */
 			.hero {
-				margin-bottom: 2.5rem;
+				margin-bottom: 3rem;
+				padding-bottom: 2.5rem;
+				border-bottom: 1px solid var(--border-subtle);
 			}
+
 			.hero h1 {
-				margin-bottom: 0.75rem;
-				font-size: 2.5rem;
+				margin-bottom: 0.5rem;
+				font-size: 3rem;
+				font-weight: 700;
+				letter-spacing: -0.02em;
+				color: rgb(var(--black));
+				line-height: 1.1;
 			}
+
 			.hero .subtitle {
-				margin-bottom: 1rem;
-				font-size: 1.1rem;
-				color: rgb(var(--gray-dark));
+				margin-bottom: 1.25rem;
+				font-size: 1.2rem;
+				font-weight: 500;
+				color: var(--accent);
+				letter-spacing: -0.01em;
 			}
+
 			.hero .tagline {
 				color: rgb(var(--gray-dark));
-				line-height: 1.6;
+				line-height: 1.7;
+				font-size: 1.05rem;
+				max-width: 640px;
 			}
+
+			/* Orientation section - Secondary */
 			.orientation {
-				margin-bottom: 1.5rem;
-				line-height: 1.8;
+				margin-bottom: 2.5rem;
+				padding: 1.5rem;
+				background: var(--accent-subtle);
+				border-radius: 12px;
+				border-left: 4px solid var(--accent);
 			}
+
+			.orientation p {
+				margin: 0;
+				line-height: 1.8;
+				color: rgb(var(--gray-dark));
+			}
+
+			/* Next steps section - Featured links */
 			.next-steps {
 				margin-bottom: 3rem;
 			}
+
 			.link-item {
-				margin-bottom: 1.5rem;
+				margin-bottom: 0;
+				padding: 1.5rem;
+				border-radius: 12px;
+				background: var(--surface);
+				border: 1px solid var(--border-subtle);
+				transition: border-color var(--transition-fast),
+					box-shadow var(--transition-fast),
+					transform var(--transition-fast);
 			}
+
+			.link-item + .link-item {
+				margin-top: 1rem;
+			}
+
+			.link-item:hover {
+				border-color: var(--accent);
+				box-shadow: var(--shadow-md);
+				transform: translateY(-2px);
+			}
+
 			.link-item a {
-				font-size: 1.1rem;
+				font-size: 1.15rem;
 				font-weight: 600;
-				word-break: keep-all;
-				overflow-wrap: normal;
+				text-decoration: none;
+				color: rgb(var(--black));
+				display: block;
+				transition: color var(--transition-fast);
 			}
+
+			.link-item a::after {
+				content: " \2192";
+				opacity: 0;
+				transition: opacity var(--transition-fast);
+				display: inline-block;
+			}
+
+			.link-item:hover a {
+				color: var(--accent);
+			}
+
+			.link-item:hover a::after {
+				opacity: 1;
+			}
+
 			.link-item .description {
 				margin-top: 0.5rem;
+				margin-bottom: 0;
 				color: rgb(var(--gray));
 				line-height: 1.6;
+				font-size: 0.95rem;
 			}
 
 			/* Mobile responsive styles */
 			@media (max-width: 720px) {
 				main {
-					padding: 1.5rem 1rem;
+					padding: 2rem 1rem;
+				}
+				.hero {
+					margin-bottom: 2rem;
+					padding-bottom: 2rem;
 				}
 				.hero h1 {
-					font-size: 1.75rem;
+					font-size: 2rem;
 				}
 				.hero .subtitle {
 					font-size: 1rem;
@@ -68,11 +140,17 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					font-size: 0.95rem;
 				}
 				.orientation {
+					padding: 1.25rem;
+					margin-bottom: 2rem;
+				}
+				.orientation p {
 					font-size: 0.95rem;
-					margin-bottom: 1.25rem;
+				}
+				.link-item {
+					padding: 1.25rem;
 				}
 				.link-item a {
-					font-size: 0.9rem;
+					font-size: 1rem;
 				}
 				.link-item .description {
 					font-size: 0.9rem;

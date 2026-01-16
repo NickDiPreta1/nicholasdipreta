@@ -11,28 +11,78 @@ import { SITE_TITLE } from '../consts';
 		<BaseHead title={`About | ${SITE_TITLE}`} description="About page" />
 		<style>
 			main {
-				max-width: 960px;
+				max-width: 720px;
 				width: calc(100% - 2em);
 				margin: auto;
 				padding: 3em 1em;
 			}
+
+			main::before {
+				content: "About";
+				display: block;
+				font-size: 2.5rem;
+				font-weight: 700;
+				color: rgb(var(--black));
+				margin-bottom: 1.5rem;
+				letter-spacing: -0.02em;
+			}
+
 			.about-content {
-				padding: 2rem 0;
+				padding: 0;
 				line-height: 1.8;
 			}
+
 			.about-content p {
-				margin-bottom: 1.5rem;
+				margin-bottom: 1.75rem;
+				color: rgb(var(--gray-dark));
 			}
+
+			.about-content > p:first-of-type {
+				font-size: 1.1rem;
+				color: rgb(var(--black));
+			}
+
 			.contact {
 				margin-top: 3rem;
-				padding-top: 2rem;
-				border-top: 1px solid rgb(var(--gray-light));
+				padding: 2rem;
+				background: var(--surface);
+				border: 1px solid var(--border-subtle);
+				border-radius: 16px;
+				box-shadow: var(--shadow-sm);
 			}
+
 			.contact h2 {
-				margin-bottom: 1rem;
+				margin-bottom: 1.25rem;
+				font-size: 1.5rem;
+				color: rgb(var(--black));
 			}
+
 			.contact p {
-				margin-bottom: 0.5rem;
+				margin-bottom: 0.75rem;
+			}
+
+			.contact p:last-child {
+				margin-bottom: 0;
+			}
+
+			.contact a {
+				font-weight: 500;
+			}
+
+			@media (max-width: 720px) {
+				main {
+					padding: 2em 1em;
+				}
+				main::before {
+					font-size: 2rem;
+				}
+				.about-content > p:first-of-type {
+					font-size: 1rem;
+				}
+				.contact {
+					padding: 1.5rem;
+					margin-top: 2rem;
+				}
 			}
 		</style>
 	</head>

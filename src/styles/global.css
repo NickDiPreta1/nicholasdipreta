@@ -5,17 +5,45 @@
  */
 
 :root {
+	/* Primary accent colors */
 	--accent: #2337ff;
-	--accent-dark: #000d8a;
+	--accent-light: #4d5eff;
+	--accent-dark: #1a2acc;
+	--accent-subtle: rgba(35, 55, 255, 0.08);
+	--accent-glow: rgba(35, 55, 255, 0.15);
+
+	/* Grays */
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
 	--gray-light: 229, 233, 240;
 	--gray-dark: 34, 41, 57;
 	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow:
-		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px
-		rgba(var(--gray), 33%);
+
+	/* Surfaces and borders */
+	--surface: #ffffff;
+	--surface-elevated: #fafbfc;
+	--border-subtle: rgba(96, 115, 159, 0.2);
+	--border-default: rgba(96, 115, 159, 0.3);
+
+	/* Shadows */
+	--box-shadow: 0 2px 6px rgba(var(--gray), 25%),
+		0 8px 24px rgba(var(--gray), 33%),
+		0 16px 32px rgba(var(--gray), 33%);
+	--shadow-sm: 0 1px 3px rgba(var(--gray), 12%),
+		0 1px 2px rgba(var(--gray), 24%);
+	--shadow-md: 0 4px 6px rgba(var(--gray), 10%),
+		0 2px 4px rgba(var(--gray), 6%);
+	--shadow-lg: 0 10px 25px rgba(var(--gray), 15%),
+		0 6px 10px rgba(var(--gray), 10%);
+	--shadow-hover: 0 14px 28px rgba(var(--gray), 18%),
+		0 10px 10px rgba(var(--gray), 12%);
+
+	/* Transitions */
+	--transition-fast: 150ms ease;
+	--transition-base: 200ms ease;
+	--transition-slow: 300ms ease;
 }
+
 @font-face {
 	font-family: "Atkinson";
 	src: url("/fonts/atkinson-regular.woff") format("woff");
@@ -23,6 +51,7 @@
 	font-style: normal;
 	font-display: swap;
 }
+
 @font-face {
 	font-family: "Atkinson";
 	src: url("/fonts/atkinson-bold.woff") format("woff");
@@ -30,7 +59,20 @@
 	font-style: normal;
 	font-display: swap;
 }
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+	overflow-x: hidden;
+}
+
 body {
+	overflow-x: hidden;
 	font-family: "Atkinson", sans-serif;
 	margin: 0;
 	padding: 0;
@@ -44,12 +86,14 @@ body {
 	font-size: 20px;
 	line-height: 1.7;
 }
+
 main {
 	max-width: 720px;
 	width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
 }
+
 h1,
 h2,
 h3,
@@ -60,74 +104,133 @@ h6 {
 	color: rgb(var(--black));
 	line-height: 1.2;
 }
+
 h1 {
 	font-size: 3.052em;
 }
+
 h2 {
 	font-size: 2.441em;
 }
+
 h3 {
 	font-size: 1.953em;
 }
+
 h4 {
 	font-size: 1.563em;
 }
+
 h5 {
 	font-size: 1.25em;
 }
+
 strong,
 b {
 	font-weight: 700;
 }
+
+/* Links - Enhanced with transitions and states */
 a {
 	color: var(--accent);
+	text-decoration: underline;
+	text-decoration-color: transparent;
+	text-underline-offset: 3px;
+	transition: color var(--transition-fast),
+		text-decoration-color var(--transition-fast);
 }
+
 a:hover {
-	color: var(--accent);
+	color: var(--accent-light);
+	text-decoration-color: var(--accent-light);
 }
+
+a:active {
+	color: var(--accent-dark);
+}
+
 p {
 	margin-bottom: 1em;
 }
+
 .prose p {
 	margin-bottom: 2em;
 }
+
 textarea {
 	width: 100%;
 	font-size: 16px;
 }
+
 input {
 	font-size: 16px;
 }
+
 table {
 	width: 100%;
+	border-collapse: collapse;
+	margin: 1.5em 0;
 }
+
+th,
+td {
+	padding: 0.75em 1em;
+	text-align: left;
+	border-bottom: 1px solid var(--border-subtle);
+}
+
+th {
+	font-weight: 600;
+	background: var(--surface-elevated);
+}
+
+tr:hover td {
+	background: var(--accent-subtle);
+}
+
 img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 8px;
 }
+
 code {
-	padding: 2px 5px;
+	padding: 0.2em 0.4em;
 	background-color: rgb(var(--gray-light));
-	border-radius: 2px;
+	border-radius: 4px;
+	font-size: 0.9em;
+	font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
+
 pre {
 	padding: 1.5em;
-	border-radius: 8px;
+	border-radius: 12px;
+	overflow-x: auto;
 }
+
 pre > code {
 	all: unset;
 }
+
 blockquote {
 	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0;
+	padding: 1em 1.5em;
+	margin: 1.5em 0;
+	background: var(--accent-subtle);
+	border-radius: 0 8px 8px 0;
 	font-size: 0.95em;
 }
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
 hr {
 	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
+	border-top: 1px solid var(--border-subtle);
+	margin: 2em 0;
 }
+
 @media (max-width: 720px) {
 	body {
 		font-size: 18px;
@@ -137,6 +240,23 @@ hr {
 	}
 }
 
+/* Selection styling */
+::selection {
+	background: var(--accent);
+	color: white;
+}
+
+/* Focus visible for better keyboard navigation */
+:focus:not(:focus-visible) {
+	outline: none;
+}
+
+:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+}
+
+/* Screen reader only */
 .sr-only {
 	border: 0;
 	padding: 0;
@@ -145,12 +265,38 @@ hr {
 	height: 1px;
 	width: 1px;
 	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
 	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
 	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
 	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+/* Print styles */
+@media print {
+	header,
+	footer,
+	.social-links {
+		display: none;
+	}
+	main {
+		padding: 0;
+	}
+	a {
+		color: inherit;
+		text-decoration: underline;
+	}
 }
