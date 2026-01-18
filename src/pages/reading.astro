@@ -1,0 +1,197 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const books = (await getCollection('reading')).sort(
+	(a, b) => b.data.finishedDate.valueOf() - a.data.finishedDate.valueOf(),
+);
+
+const booksWithContent = await Promise.all(
+	books.map(async (book) => {
+		const { Content } = await render(book);
+		return { ...book, Content };
+	})
+);
+
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Reading ${currentYear} | ${SITE_TITLE}`} description={`Books I've read in ${currentYear}`} />
+		<style>
+			main {
+				max-width: 960px;
+				width: calc(100% - 2em);
+				margin: auto;
+				padding: 3em 1em;
+			}
+
+			section::before {
+				content: "Reading List";
+				display: block;
+				font-size: 2rem;
+				font-weight: 700;
+				color: rgb(var(--black));
+				margin-bottom: 0.5rem;
+				letter-spacing: -0.02em;
+			}
+
+			.subtitle {
+				color: rgb(var(--gray));
+				margin-bottom: 2rem;
+			}
+
+			.book-list {
+				display: flex;
+				flex-direction: column;
+				gap: 1.5rem;
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			.book-item {
+				padding: 1.25rem;
+				background: var(--surface);
+				border: 1px solid var(--border-subtle);
+				border-radius: 16px;
+				transition: border-color var(--transition-base),
+					box-shadow var(--transition-base);
+			}
+
+			.book-item:hover {
+				border-color: var(--accent);
+				box-shadow: var(--shadow-hover);
+			}
+
+			.book-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				gap: 1rem;
+				margin-bottom: 0.75rem;
+			}
+
+			.book-title {
+				margin: 0;
+				font-size: 1.25rem;
+				font-weight: 600;
+				color: rgb(var(--black));
+				line-height: 1.3;
+			}
+
+			.book-author {
+				margin: 0;
+				color: rgb(var(--gray));
+				font-size: 0.95rem;
+			}
+
+			.book-meta {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+				flex-shrink: 0;
+			}
+
+			.book-date {
+				color: rgb(var(--gray));
+				font-size: 0.875rem;
+			}
+
+			.book-rating {
+				color: var(--accent);
+				font-size: 0.9rem;
+				letter-spacing: 0.1em;
+			}
+
+			.book-review {
+				margin-top: 1rem;
+				padding-top: 1rem;
+				border-top: 1px solid var(--border-subtle);
+				color: rgb(var(--gray-dark));
+				font-size: 0.95rem;
+				line-height: 1.6;
+			}
+
+			.book-review :global(p:first-child) {
+				margin-top: 0;
+			}
+
+			.book-review :global(p:last-child) {
+				margin-bottom: 0;
+			}
+
+			.empty-state {
+				text-align: center;
+				padding: 3rem 1rem;
+				color: rgb(var(--gray));
+			}
+
+			@media (max-width: 720px) {
+				main {
+					padding: 2em 1em;
+				}
+				section::before {
+					font-size: 1.5rem;
+				}
+				.book-header {
+					flex-direction: column;
+					gap: 0.5rem;
+				}
+				.book-meta {
+					width: 100%;
+					justify-content: space-between;
+				}
+				.book-title {
+					font-size: 1.1rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section>
+				<p class="subtitle">Books I've read in {currentYear}</p>
+				{booksWithContent.length > 0 ? (
+					<ul class="book-list">
+						{booksWithContent.map((book) => (
+							<li class="book-item">
+								<div class="book-header">
+									<div>
+										<h3 class="book-title">{book.data.title}</h3>
+										<p class="book-author">by {book.data.author}</p>
+									</div>
+									<div class="book-meta">
+										<span class="book-date">
+											<FormattedDate date={book.data.finishedDate} />
+										</span>
+										{book.data.rating && (
+											<span class="book-rating">
+												{'★'.repeat(book.data.rating)}{'☆'.repeat(5 - book.data.rating)}
+											</span>
+										)}
+									</div>
+								</div>
+								{book.body && (
+									<div class="book-review">
+										<book.Content />
+									</div>
+								)}
+							</li>
+						))}
+					</ul>
+				) : (
+					<p class="empty-state">No books yet this year. Check back soon!</p>
+				)}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
