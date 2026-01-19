@@ -1,8 +1,8 @@
 ---
 title: "The Alignment Problem"
 author: "Brian Christian"
-finishedDate: "Jan 5 2026"
-rating: 4
+category: "non-fiction"
+status: "reading"
 ---
 
-Christian does an excellent job making technical AI safety concepts accessible without dumbing them down. The historical narrative approach works well, tracing ideas from behaviorist psychology through modern deep learning. Particularly strong on reward hacking and specification gaming examples. The section on fairness in ML felt slightly disconnected from the core alignment thesis, but overall a solid introduction to why getting machines to do what we actually want is harder than it sounds.
+A deep dive into the challenges of getting AI systems to do what we actually want. Covers the history of machine learning through the lens of alignment, from early behaviorist psychology to modern deep learning.

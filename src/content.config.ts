@@ -21,8 +21,10 @@ const reading = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		author: z.string(),
-		finishedDate: z.coerce.date(),
+		finishedDate: z.coerce.date().optional(),
 		rating: z.number().min(1).max(5).optional(),
+		category: z.enum(['non-fiction', 'fantasy', 'sci-fi', 'fiction']).optional(),
+		status: z.enum(['reading', 'finished']).default('finished'),
 	}),
 });
 

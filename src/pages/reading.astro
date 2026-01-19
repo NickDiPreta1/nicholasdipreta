@@ -6,16 +6,28 @@ import Header from '../components/Header.astro';
 import { SITE_TITLE } from '../consts';
 import FormattedDate from '../components/FormattedDate.astro';
 
-const books = (await getCollection('reading')).sort(
-	(a, b) => b.data.finishedDate.valueOf() - a.data.finishedDate.valueOf(),
-);
+const allBooks = await getCollection('reading');
 
-const booksWithContent = await Promise.all(
-	books.map(async (book) => {
+const currentlyReading = allBooks.filter(b => b.data.status === 'reading');
+const finishedBooks = allBooks
+	.filter(b => b.data.status !== 'reading')
+	.sort((a, b) => (b.data.finishedDate?.valueOf() || 0) - (a.data.finishedDate?.valueOf() || 0));
+
+const currentlyReadingWithContent = await Promise.all(
+	currentlyReading.map(async (book) => {
 		const { Content } = await render(book);
 		return { ...book, Content };
 	})
 );
+
+const finishedWithContent = await Promise.all(
+	finishedBooks.map(async (book) => {
+		const { Content } = await render(book);
+		return { ...book, Content };
+	})
+);
+
+const categories = [...new Set(finishedBooks.map(b => b.data.category).filter(Boolean))] as string[];
 
 const currentYear = new Date().getFullYear();
 ---
@@ -42,9 +54,61 @@ const currentYear = new Date().getFullYear();
 				letter-spacing: -0.02em;
 			}
 
+			.intro {
+				color: rgb(var(--gray-dark));
+				margin-bottom: 2rem;
+				font-size: 1.05rem;
+				line-height: 1.5;
+			}
+
 			.subtitle {
 				color: rgb(var(--gray));
+				margin-bottom: 1.5rem;
+			}
+
+			.section-title {
+				font-size: 1.25rem;
+				font-weight: 600;
+				color: rgb(var(--black));
+				margin: 0 0 1rem 0;
+			}
+
+			.currently-reading {
+				margin-bottom: 2.5rem;
+			}
+
+			.currently-reading .book-item {
+				border-left: 3px solid var(--accent);
+			}
+
+			.filter-tabs {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
 				margin-bottom: 2rem;
+			}
+
+			.filter-tab {
+				padding: 0.5rem 1rem;
+				border: 1px solid var(--border-subtle);
+				border-radius: 20px;
+				background: var(--surface);
+				color: rgb(var(--gray));
+				font-size: 0.875rem;
+				cursor: pointer;
+				transition: all var(--transition-base);
+				text-transform: capitalize;
+			}
+
+			.filter-tab:hover {
+				border-color: var(--accent);
+				color: rgb(var(--black));
+			}
+
+			.filter-tab.active {
+				background: var(--accent);
+				border-color: var(--accent);
+				color: white;
 			}
 
 			.book-list {
@@ -110,6 +174,57 @@ const currentYear = new Date().getFullYear();
 				letter-spacing: 0.1em;
 			}
 
+			.book-category {
+				display: inline-block;
+				padding: 0.2rem 0.6rem;
+				font-size: 0.75rem;
+				font-weight: 500;
+				text-transform: capitalize;
+				border-radius: 12px;
+				background: var(--border-subtle);
+				color: rgb(var(--gray-dark));
+			}
+
+			.book-category[data-category="fantasy"] {
+				background: #e8daff;
+				color: #5b21b6;
+			}
+
+			.book-category[data-category="sci-fi"] {
+				background: #d1fae5;
+				color: #065f46;
+			}
+
+			.book-category[data-category="non-fiction"] {
+				background: #dbeafe;
+				color: #1e40af;
+			}
+
+			.book-category[data-category="fiction"] {
+				background: #fef3c7;
+				color: #92400e;
+			}
+
+			:root.dark .book-category[data-category="fantasy"] {
+				background: #4c1d95;
+				color: #e8daff;
+			}
+
+			:root.dark .book-category[data-category="sci-fi"] {
+				background: #064e3b;
+				color: #d1fae5;
+			}
+
+			:root.dark .book-category[data-category="non-fiction"] {
+				background: #1e3a8a;
+				color: #dbeafe;
+			}
+
+			:root.dark .book-category[data-category="fiction"] {
+				background: #78350f;
+				color: #fef3c7;
+			}
+
 			.book-review {
 				margin-top: 1rem;
 				padding-top: 1rem;
@@ -158,20 +273,68 @@ const currentYear = new Date().getFullYear();
 		<Header />
 		<main>
 			<section>
-				<p class="subtitle">What I've read in {currentYear}</p>
-				{booksWithContent.length > 0 ? (
+				<p class="intro">I read mostly fantasy and non-fiction.</p>
+
+				{currentlyReadingWithContent.length > 0 && (
+					<div class="currently-reading">
+						<h2 class="section-title">Currently Reading</h2>
+						<ul class="book-list">
+							{currentlyReadingWithContent.map((book) => (
+								<li class="book-item">
+									<div class="book-header">
+										<div>
+											<h3 class="book-title">{book.data.title}</h3>
+											<p class="book-author">by {book.data.author}</p>
+										</div>
+										<div class="book-meta">
+											{book.data.category && (
+												<span class="book-category" data-category={book.data.category}>
+													{book.data.category}
+												</span>
+											)}
+										</div>
+									</div>
+									{book.body && (
+										<div class="book-review">
+											<book.Content />
+										</div>
+									)}
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
+
+				<p class="subtitle"><span class="book-count">{finishedBooks.length}</span> books finished in {currentYear}</p>
+
+				{categories.length > 0 && (
+					<div class="filter-tabs">
+						<button class="filter-tab active" data-category="all">All</button>
+						{categories.map((category) => (
+							<button class="filter-tab" data-category={category}>{category}</button>
+						))}
+					</div>
+				)}
+				{finishedWithContent.length > 0 ? (
 					<ul class="book-list">
-						{booksWithContent.map((book) => (
-							<li class="book-item">
+						{finishedWithContent.map((book) => (
+							<li class="book-item" data-category={book.data.category || 'uncategorized'}>
 								<div class="book-header">
 									<div>
 										<h3 class="book-title">{book.data.title}</h3>
 										<p class="book-author">by {book.data.author}</p>
 									</div>
 									<div class="book-meta">
-										<span class="book-date">
-											<FormattedDate date={book.data.finishedDate} />
-										</span>
+										{book.data.category && (
+											<span class="book-category" data-category={book.data.category}>
+												{book.data.category}
+											</span>
+										)}
+										{book.data.finishedDate && (
+											<span class="book-date">
+												<FormattedDate date={book.data.finishedDate} />
+											</span>
+										)}
 										{book.data.rating && (
 											<span class="book-rating">
 												{'★'.repeat(book.data.rating)}{'☆'.repeat(5 - book.data.rating)}
@@ -193,5 +356,34 @@ const currentYear = new Date().getFullYear();
 			</section>
 		</main>
 		<Footer />
+		<script>
+			const tabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
+			const finishedList = document.querySelector('.book-list:not(.currently-reading .book-list)');
+			const finishedBooks = finishedList?.querySelectorAll<HTMLLIElement>('.book-item') || [];
+			const countEl = document.querySelector<HTMLSpanElement>('.book-count');
+
+			tabs.forEach(tab => {
+				tab.addEventListener('click', () => {
+					tabs.forEach(t => t.classList.remove('active'));
+					tab.classList.add('active');
+
+					const category = tab.dataset.category;
+					let visibleCount = 0;
+
+					finishedBooks.forEach(book => {
+						if (category === 'all' || book.dataset.category === category) {
+							book.style.display = '';
+							visibleCount++;
+						} else {
+							book.style.display = 'none';
+						}
+					});
+
+					if (countEl) {
+						countEl.textContent = String(visibleCount);
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
