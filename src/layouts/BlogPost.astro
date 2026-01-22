@@ -5,10 +5,17 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
+import CopyCode from '../components/CopyCode.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+interface Props extends CollectionEntry<'blog'>['data'] {
+	readingTime?: string;
+	prevPost?: { slug: string; title: string } | null;
+	nextPost?: { slug: string; title: string } | null;
+}
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, readingTime, prevPost, nextPost } = Astro.props;
 ---
 
 <html lang="en">
@@ -112,6 +119,54 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				overflow-x: auto;
 			}
 
+			.reading-time {
+				color: rgb(var(--gray));
+			}
+
+			.post-nav {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 1.5em;
+				margin-top: 4em;
+				padding-top: 2em;
+				border-top: 1px solid var(--border-subtle);
+			}
+
+			.nav-link {
+				display: flex;
+			}
+
+			.nav-link.next {
+				justify-content: flex-end;
+				text-align: right;
+			}
+
+			.nav-link a {
+				display: flex;
+				flex-direction: column;
+				gap: 0.25em;
+				padding: 1em;
+				border-radius: 8px;
+				text-decoration: none;
+				transition: background-color var(--transition-fast);
+			}
+
+			.nav-link a:hover {
+				background-color: var(--accent-subtle);
+			}
+
+			.nav-label {
+				font-size: 0.85rem;
+				color: rgb(var(--gray));
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+			}
+
+			.nav-title {
+				font-weight: 600;
+				color: var(--accent);
+			}
+
 			@media (max-width: 850px) {
 				.hero-image {
 					padding: 1rem 0.5rem 0;
@@ -134,11 +189,20 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 					-webkit-hyphens: auto;
 					line-height: 1.25;
 				}
+				.post-nav {
+					grid-template-columns: 1fr;
+					gap: 1em;
+				}
+				.nav-link.next {
+					justify-content: flex-start;
+					text-align: left;
+				}
 			}
 		</style>
 	</head>
 
 	<body>
+		<ReadingProgress />
 		<Header />
 		<main>
 			<article>
@@ -149,6 +213,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 					<div class="title">
 						<div class="date">
 							<FormattedDate date={pubDate} />
+							{readingTime && <span class="reading-time"> · {readingTime}</span>}
 							{
 								updatedDate && (
 									<div class="last-updated-on">
@@ -161,9 +226,31 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 						<hr />
 					</div>
 					<slot />
+					{(prevPost || nextPost) && (
+						<nav class="post-nav">
+							<div class="nav-link prev">
+								{prevPost && (
+									<a href={`/blog/${prevPost.slug}`}>
+										<span class="nav-label">Previous</span>
+										<span class="nav-title">{prevPost.title}</span>
+									</a>
+								)}
+							</div>
+							<div class="nav-link next">
+								{nextPost && (
+									<a href={`/blog/${nextPost.slug}`}>
+										<span class="nav-label">Next</span>
+										<span class="nav-title">{nextPost.title}</span>
+									</a>
+								)}
+							</div>
+						</nav>
+					)}
 				</div>
 			</article>
 		</main>
 		<Footer />
+		<ScrollToTop />
+		<CopyCode />
 	</body>
 </html>

@@ -44,6 +44,26 @@
 	--transition-slow: 300ms ease;
 }
 
+/* Dark mode */
+.dark {
+	--accent: #6b7aff;
+	--accent-light: #8b96ff;
+	--accent-dark: #4d5eff;
+	--accent-subtle: rgba(107, 122, 255, 0.15);
+	--accent-glow: rgba(107, 122, 255, 0.25);
+
+	--black: 248, 250, 252;
+	--gray: 180, 190, 210;
+	--gray-light: 40, 45, 60;
+	--gray-dark: 235, 240, 245;
+	--gray-gradient: rgba(25, 28, 40, 50%), #13151f;
+
+	--surface: #13151f;
+	--surface-elevated: #1e2130;
+	--border-subtle: rgba(180, 190, 210, 0.2);
+	--border-default: rgba(180, 190, 210, 0.3);
+}
+
 @font-face {
 	font-family: "Atkinson";
 	src: url("/fonts/atkinson-regular.woff") format("woff");
