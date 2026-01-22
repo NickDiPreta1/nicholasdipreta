@@ -1,0 +1,17 @@
+---
+interface Props {
+	number: number;
+}
+
+const { number } = Astro.props;
+const id = `sidenote-${number}`;
+---
+
+<span class="sidenote-wrapper">
+	<label for={id} class="sidenote-toggle sidenote-number">{number}</label>
+	<input type="checkbox" id={id} class="sidenote-checkbox" />
+	<span class="sidenote">
+		<span class="sidenote-number">{number}</span>
+		<slot />
+	</span>
+</span>

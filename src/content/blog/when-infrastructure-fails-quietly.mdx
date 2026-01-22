@@ -3,6 +3,7 @@ title: "When Infrastructure Fails Quietly"
 description: "How the 2003 Northeast Blackout reveals why monitoring systems must fail loudly, and why 'fail truthfully' is a design obligation in high-consequence systems."
 pubDate: 'Jan 15 2026'
 ---
+import SideNote from '../../components/SideNote.astro';
 
 The Northeast Blackout of 2003 arrived at a tense moment in the United States. The country was still living in the shadow of 9/11, and sudden disruptions felt heavier than they otherwise might have. When the power went out across the Northeast and parts of Canada, it was difficult, at least at first, to know whether this was an ordinary infrastructure failure or something more ominous.
 
@@ -21,7 +22,7 @@ Large infrastructure systems are run through screens, alerts, and monitoring too
 
 If quiet failure is so dangerous, why does it happen at all? Usually because it is the default. Systems are often built to "stay up" even when parts degrade, and warning layers are often tuned to avoid noise, not to loudly announce their own weakness. Unless a team explicitly treats *"warn when you can't warn"* as a requirement, the system can keep looking calm at the exact moment it has become least trustworthy.
 
-In what follows, I use the [U.S.-Canada Task Force's Final Report](https://www.energy.gov/oe/downloads/blackout-2003-final-report-us-canada-power-system-outage-task-force) as a guide to a simple lesson for anyone who builds software:
+In what follows, I use the U.S.-Canada Task Force's Final Report<SideNote number={1}>The full title is *Final Report on the August 14, 2003 Blackout in the United States and Canada: Causes and Recommendations*, published April 2004. It remains one of the most detailed public post-mortems of a large-scale infrastructure failure, running over 200 pages of technical and institutional analysis.</SideNote> as a guide to a simple lesson for anyone who builds software:
 
 > **If a system's job is to warn, it must also warn when it can no longer warn.**
 
@@ -37,11 +38,11 @@ On August 14, there were early warning events, physical ones. It was a hot day, 
 
 What followed wasn't a lack of signals, but **a failure to turn signals into warnings**.
 
-The alarm software hit a rare timing bug: two parts of the system occasionally tried to update the same shared internal record at nearly the same time. Their changes overlapped and corrupted that record. Once that happened, the alarm program got trapped in a loop. It couldn't process new alarms, and it couldn't clearly announce that it was failing.
+The alarm software hit a rare timing bug:<SideNote number={2}>In concurrent systems, a race condition occurs when two operations access shared state without proper synchronization. These bugs are notoriously difficult to catch in testing because they depend on precise timing that may only occur under real-world load. The alarm system's bug had reportedly existed for years without manifesting.</SideNote> two parts of the system occasionally tried to update the same shared internal record at nearly the same time. Their changes overlapped and corrupted that record. Once that happened, the alarm program got trapped in a loop. It couldn't process new alarms, and it couldn't clearly announce that it was failing.
 
 ### An analogy: the hospital triage desk
 
-> Imagine a hospital triage desk. Patients keep walking in. The waiting room keeps filling. Clipboards and forms are still being handed out. From a distance, the hospital looks "open."
+> Imagine a hospital triage desk. Patients keep walking in. The waiting room keeps filling. Clipboards and forms are still being handed out. From a distance, the hospital looks "open."<SideNote number={3}>Analogies like this one draw on a tradition in safety engineering sometimes called *resonance analysis*: using familiar systems to reveal structural similarities in failure modes. The point is not that hospitals and power grids are alike in detail, but that the *shape* of quiet failure — visible activity masking invisible breakdown — recurs across domains.</SideNote>
 >
 > Now imagine that, once in a while, two staff members update the same chart at nearly the same time, and their notes overlap into a garbled mess. That corrupted chart is handed to the triage nurse. She tries to interpret it, can't, and ends up stuck on that one chart, rereading it and trying to make it make sense.
 >
@@ -123,7 +124,7 @@ Tools like these, involved with both *representation of reality* and *decision m
 
 The lesson is not that we can eliminate failures. The lesson is that **we can choose how failures present themselves**.
 
-In high-consequence systems, *"fail truthfully"* should be treated as a design requirement:
+In high-consequence systems, *"fail truthfully"* should be treated as a design requirement:<SideNote number={4}>The distinction between *fail-safe* (system defaults to a safe state on failure) and *fail-secure* (system defaults to a locked-down state) is well-established in engineering. "Fail truthfully" adds a complementary idea: that a system's failure mode should preserve honest communication about its own state, rather than projecting false confidence.</SideNote>
 
 - Make degraded visibility **unmistakable**
 - Make uncertainty **explicit**
