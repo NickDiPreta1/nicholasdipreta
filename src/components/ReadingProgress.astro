@@ -25,24 +25,44 @@
 </style>
 
 <script is:inline>
-	function updateReadingProgress() {
-		const article = document.querySelector('article');
-		if (!article) return;
+	(function() {
+		var scrollHandler = null;
+		var resizeHandler = null;
 
-		const articleRect = article.getBoundingClientRect();
-		const articleTop = window.scrollY + articleRect.top;
-		const articleHeight = article.offsetHeight;
-		const windowHeight = window.innerHeight;
-		const scrollY = window.scrollY;
+		function initReadingProgress() {
+			if (scrollHandler) {
+				window.removeEventListener('scroll', scrollHandler);
+				window.removeEventListener('resize', resizeHandler);
+			}
 
-		const start = articleTop;
-		const end = articleTop + articleHeight - windowHeight;
-		const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
+			var bar = document.getElementById('reading-progress-bar');
+			if (!bar) return;
+			bar.style.width = '0%';
 
-		document.getElementById('reading-progress-bar').style.width = `${progress * 100}%`;
-	}
+			function update() {
+				var article = document.querySelector('article');
+				if (!article) { bar.style.width = '0%'; return; }
+				var rect = article.getBoundingClientRect();
+				var articleTop = window.scrollY + rect.top;
+				var articleHeight = article.offsetHeight;
+				var windowHeight = window.innerHeight;
+				var start = articleTop;
+				var end = articleTop + articleHeight - windowHeight;
+				var progress = Math.min(Math.max((window.scrollY - start) / (end - start), 0), 1);
+				bar.style.width = (progress * 100) + '%';
+			}
 
-	window.addEventListener('scroll', updateReadingProgress, { passive: true });
-	window.addEventListener('resize', updateReadingProgress, { passive: true });
-	updateReadingProgress();
+			scrollHandler = update;
+			resizeHandler = update;
+			window.addEventListener('scroll', scrollHandler, { passive: true });
+			window.addEventListener('resize', resizeHandler, { passive: true });
+			update();
+		}
+
+		initReadingProgress();
+		if (!window.__readingProgressInit) {
+			document.addEventListener('astro:page-load', initReadingProgress);
+			window.__readingProgressInit = true;
+		}
+	})();
 </script>

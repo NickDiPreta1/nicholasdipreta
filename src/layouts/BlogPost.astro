@@ -175,10 +175,6 @@ const { title, description, pubDate, updatedDate, heroImage, readingTime, prevPo
 			}
 
 			/* Sidenote styles */
-			.prose :global(.sidenote-wrapper) {
-				position: relative;
-			}
-
 			.prose :global(.sidenote-checkbox) {
 				display: none;
 			}
@@ -203,12 +199,12 @@ const { title, description, pubDate, updatedDate, heroImage, readingTime, prevPo
 				padding-left: 0.75em;
 			}
 
-			/* Desktop: side notes in right margin */
-			@media (min-width: 1100px) {
+			/* Desktop: side notes in right margin, positioned relative to .prose */
+			@media (min-width: 1300px) {
 				.prose :global(.sidenote) {
 					position: absolute;
-					right: -280px;
-					width: 240px;
+					left: calc(100% + 24px);
+					width: 220px;
 					margin-top: -1.5em;
 					display: block;
 				}
@@ -224,7 +220,7 @@ const { title, description, pubDate, updatedDate, heroImage, readingTime, prevPo
 			}
 
 			/* Mobile/tablet: inline expandable notes */
-			@media (max-width: 1099px) {
+			@media (max-width: 1299px) {
 				.prose :global(.sidenote) {
 					display: none;
 					margin: 0.75em 0;

@@ -62,21 +62,36 @@
 </style>
 
 <script is:inline>
-	const scrollToTopBtn = document.getElementById('scroll-to-top');
-	const scrollThreshold = 400;
+	(function() {
+		function initScrollToTop() {
+			var btn = document.getElementById('scroll-to-top');
+			if (!btn) return;
 
-	function toggleScrollButton() {
-		if (window.scrollY > scrollThreshold) {
-			scrollToTopBtn.classList.add('visible');
-		} else {
-			scrollToTopBtn.classList.remove('visible');
+			btn.classList.remove('visible');
+
+			if (!btn.dataset.listenerAttached) {
+				btn.dataset.listenerAttached = 'true';
+				btn.addEventListener('click', function() {
+					window.scrollTo({ top: 0, behavior: 'smooth' });
+				});
+				window.addEventListener('scroll', function() {
+					if (window.scrollY > 400) {
+						btn.classList.add('visible');
+					} else {
+						btn.classList.remove('visible');
+					}
+				}, { passive: true });
+			}
+
+			if (window.scrollY > 400) {
+				btn.classList.add('visible');
+			}
 		}
-	}
 
-	scrollToTopBtn.addEventListener('click', () => {
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	});
-
-	window.addEventListener('scroll', toggleScrollButton, { passive: true });
-	toggleScrollButton();
+		initScrollToTop();
+		if (!window.__scrollTopInit) {
+			document.addEventListener('astro:page-load', initScrollToTop);
+			window.__scrollTopInit = true;
+		}
+	})();
 </script>

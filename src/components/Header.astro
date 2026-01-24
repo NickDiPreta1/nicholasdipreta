@@ -4,7 +4,7 @@ import HeaderLink from './HeaderLink.astro';
 import ThemeToggle from './ThemeToggle.astro';
 ---
 
-<header>
+<header transition:persist>
 	<nav>
 		<h2><a href="/">{SITE_TITLE}</a></h2>
 		<div class="internal-links">
@@ -166,3 +166,19 @@ import ThemeToggle from './ThemeToggle.astro';
 		}
 	}
 </style>
+
+<script is:inline>
+	function updateActiveNav() {
+		const pathname = window.location.pathname;
+		const links = document.querySelectorAll('header .internal-links a');
+		links.forEach(function(link) {
+			const href = link.getAttribute('href');
+			const isActive = href === pathname || (href !== '/' && pathname.startsWith(href));
+			link.classList.toggle('active', isActive);
+		});
+	}
+	if (!window.__navListenerAdded) {
+		document.addEventListener('astro:page-load', updateActiveNav);
+		window.__navListenerAdded = true;
+	}
+</script>
