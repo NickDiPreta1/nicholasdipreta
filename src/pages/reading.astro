@@ -126,7 +126,18 @@ const currentYear = new Date().getFullYear();
 				border: 1px solid var(--border-subtle);
 				border-radius: 16px;
 				transition: border-color var(--transition-base),
-					box-shadow var(--transition-base);
+					box-shadow var(--transition-base),
+					opacity var(--transition-base),
+					transform var(--transition-base);
+			}
+
+			.book-item.hiding {
+				opacity: 0;
+				transform: scale(0.95);
+			}
+
+			.book-item.hidden {
+				display: none;
 			}
 
 			.book-item:hover {
@@ -371,11 +382,18 @@ const currentYear = new Date().getFullYear();
 					let visibleCount = 0;
 
 					finishedBooks.forEach(book => {
-						if (category === 'all' || book.dataset.category === category) {
-							book.style.display = '';
+						const shouldShow = category === 'all' || book.dataset.category === category;
+
+						if (shouldShow) {
+							book.classList.remove('hiding', 'hidden');
 							visibleCount++;
 						} else {
-							book.style.display = 'none';
+							book.classList.add('hiding');
+							setTimeout(() => {
+								if (book.classList.contains('hiding')) {
+									book.classList.add('hidden');
+								}
+							}, 200);
 						}
 					});
 

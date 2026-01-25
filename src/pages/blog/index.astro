@@ -179,7 +179,7 @@ const posts = (await getCollection('blog')).sort(
 											width={720}
 											height={360}
 											src={post.data.heroImage.src}
-											alt=""
+											alt={`Cover image for ${post.data.title}`}
 										/>
 									)}
 									<h4 class="title">{post.data.title}</h4>

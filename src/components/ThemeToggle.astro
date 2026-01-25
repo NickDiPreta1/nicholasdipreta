@@ -40,6 +40,16 @@
 		transform: translateY(-1px);
 	}
 
+	:global(.dark) #theme-toggle {
+		background-color: rgba(255, 255, 255, 0.1);
+		color: rgb(var(--gray-light));
+	}
+
+	:global(.dark) #theme-toggle:hover {
+		background-color: rgba(255, 255, 255, 0.15);
+		color: #fff;
+	}
+
 	#theme-toggle:focus-visible {
 		outline: 2px solid var(--accent);
 		outline-offset: 2px;
@@ -67,11 +77,20 @@
 		var btn = document.getElementById('theme-toggle');
 		if (!btn || btn.dataset.listenerAttached) return;
 		btn.dataset.listenerAttached = 'true';
+
+		function updateAriaLabel() {
+			var isDark = document.documentElement.classList.contains('dark');
+			btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+		}
+
+		updateAriaLabel();
+
 		btn.addEventListener('click', function() {
 			var isDark = document.documentElement.classList.contains('dark');
 			var newTheme = isDark ? 'light' : 'dark';
 			document.documentElement.classList.toggle('dark', newTheme === 'dark');
 			localStorage.setItem('theme', newTheme);
+			updateAriaLabel();
 		});
 	})();
 </script>
