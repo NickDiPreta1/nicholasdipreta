@@ -37,7 +37,15 @@
 	#theme-toggle:hover {
 		color: rgb(var(--gray-dark));
 		background-color: rgb(var(--gray-light));
-		transform: translateY(-1px);
+		transform: scale(1.1);
+	}
+
+	#theme-toggle svg {
+		transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	#theme-toggle.switching svg {
+		transform: rotate(360deg);
 	}
 
 	:global(.dark) #theme-toggle {
@@ -86,6 +94,9 @@
 		updateAriaLabel();
 
 		btn.addEventListener('click', function() {
+			btn.classList.add('switching');
+			setTimeout(function() { btn.classList.remove('switching'); }, 500);
+
 			var isDark = document.documentElement.classList.contains('dark');
 			var newTheme = isDark ? 'light' : 'dark';
 			document.documentElement.classList.toggle('dark', newTheme === 'dark');

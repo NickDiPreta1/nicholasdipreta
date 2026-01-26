@@ -1,0 +1,137 @@
+---
+---
+
+<div class="shortcuts-widget" id="shortcuts-widget">
+	<button class="shortcuts-trigger" aria-label="Keyboard shortcuts" title="Keyboard shortcuts">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<rect x="2" y="4" width="20" height="16" rx="2"/>
+			<path d="M6 8h.001M10 8h.001M14 8h.001M18 8h.001M8 12h.001M12 12h.001M16 12h.001M7 16h10"/>
+		</svg>
+	</button>
+	<div class="shortcuts-tooltip">
+		<div class="shortcut"><kbd>t</kbd> <span>theme</span></div>
+		<div class="shortcut"><kbd>h</kbd> <span>home</span></div>
+		<div class="shortcut"><kbd>b</kbd> <span>blog</span></div>
+		<div class="shortcut post-nav-shortcut"><kbd>j</kbd> <span>next</span></div>
+		<div class="shortcut post-nav-shortcut"><kbd>k</kbd> <span>prev</span></div>
+	</div>
+</div>
+
+<script is:inline>
+	function updateShortcutsVisibility() {
+		var hasPostNav = document.querySelector('.nav-link.next a, .nav-link.prev a');
+		var postNavShortcuts = document.querySelectorAll('.post-nav-shortcut');
+		postNavShortcuts.forEach(function(el) {
+			el.style.display = hasPostNav ? 'flex' : 'none';
+		});
+	}
+	document.addEventListener('DOMContentLoaded', updateShortcutsVisibility);
+	document.addEventListener('astro:page-load', updateShortcutsVisibility);
+</script>
+
+<style>
+	.shortcuts-widget {
+		position: fixed;
+		bottom: 1.5rem;
+		left: 1.5rem;
+		z-index: 90;
+	}
+
+	.shortcuts-trigger {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		padding: 0;
+		border: 1px solid var(--border-subtle);
+		border-radius: 8px;
+		background: var(--surface);
+		color: rgb(var(--gray));
+		cursor: pointer;
+		box-shadow: var(--shadow-sm);
+		transition: color var(--transition-fast),
+			border-color var(--transition-fast),
+			box-shadow var(--transition-fast),
+			transform var(--transition-fast);
+	}
+
+	.shortcuts-trigger:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+		box-shadow: var(--shadow-md);
+		transform: translateY(-2px);
+	}
+
+	.shortcuts-tooltip {
+		position: absolute;
+		bottom: calc(100% + 8px);
+		left: 0;
+		padding: 0.75rem;
+		background: var(--surface);
+		border: 1px solid var(--border-subtle);
+		border-radius: 8px;
+		box-shadow: var(--shadow-lg);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(4px);
+		transition: opacity var(--transition-fast),
+			visibility var(--transition-fast),
+			transform var(--transition-fast);
+		white-space: nowrap;
+	}
+
+	.shortcuts-widget:hover .shortcuts-tooltip,
+	.shortcuts-widget.active .shortcuts-tooltip {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.shortcut {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		font-size: 0.8rem;
+		color: rgb(var(--gray-dark));
+	}
+
+	.shortcut + .shortcut {
+		margin-top: 0.4rem;
+	}
+
+	.shortcut kbd {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 1.5em;
+		padding: 0.15em 0.4em;
+		font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+		font-size: 0.85em;
+		background: rgb(var(--gray-light));
+		border: 1px solid var(--border-subtle);
+		border-radius: 4px;
+		box-shadow: 0 1px 0 var(--border-subtle);
+	}
+
+	.shortcut span {
+		color: rgb(var(--gray));
+	}
+
+	@media (max-width: 720px) {
+		.shortcuts-widget {
+			bottom: 1rem;
+			left: 1rem;
+		}
+
+		.shortcuts-trigger {
+			width: 32px;
+			height: 32px;
+		}
+
+		.shortcuts-trigger svg {
+			width: 14px;
+			height: 14px;
+		}
+	}
+</style>

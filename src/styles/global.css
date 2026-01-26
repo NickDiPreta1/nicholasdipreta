@@ -150,19 +150,21 @@ b {
 	font-weight: 700;
 }
 
-/* Links - Enhanced with transitions and states */
+/* Links - Animated underline effect */
 a {
 	color: var(--accent);
-	text-decoration: underline;
-	text-decoration-color: transparent;
-	text-underline-offset: 3px;
+	text-decoration: none;
+	background-image: linear-gradient(var(--accent-light), var(--accent-light));
+	background-size: 0% 2px;
+	background-position: 0 100%;
+	background-repeat: no-repeat;
 	transition: color var(--transition-fast),
-		text-decoration-color var(--transition-fast);
+		background-size var(--transition-base) ease-out;
 }
 
 a:hover {
 	color: var(--accent-light);
-	text-decoration-color: var(--accent-light);
+	background-size: 100% 2px;
 }
 
 a:active {
@@ -292,6 +294,37 @@ hr {
 	white-space: nowrap;
 }
 
+/* Scroll reveal animations */
+.reveal {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Staggered reveal for lists */
+.reveal-stagger > * {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 160ms; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 240ms; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 320ms; }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 400ms; }
+
+.reveal-stagger.visible > * {
+	opacity: 1;
+	transform: translateY(0);
+}
+
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
 	*,
@@ -303,6 +336,11 @@ hr {
 	}
 	html {
 		scroll-behavior: auto;
+	}
+	.reveal,
+	.reveal-stagger > * {
+		opacity: 1;
+		transform: none;
 	}
 }
 

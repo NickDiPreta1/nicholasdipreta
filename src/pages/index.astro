@@ -82,6 +82,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				font-size: 1.15rem;
 				font-weight: 600;
 				text-decoration: none;
+				background-image: none;
 				color: rgb(var(--black));
 				display: block;
 				transition: color var(--transition-fast);
@@ -143,14 +144,14 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<body>
 		<Header />
 		<main>
-			<section class="hero">
+			<section class="hero reveal">
 				<h1>Nick DiPreta</h1>
 				<p class="subtitle">Software engineer studying ethical responsibility in software systems</p>
 				<p>I write about how design decisions in software and AI shape accountability, redistribute risk, and influence real-world outcomes. This site is a place for case-based analyses of software failures and how ethical responsibility gets embedded, deferred, or obscured in technical systems.</p>
 				<p>Outside of work, I read a lot of fantasy and books about software. I'm slowly building this site into a more complete picture of who I am—what I'm reading, how I'm training, what I'm tracking.</p>
 			</section>
 
-			<section class="next-steps">
+			<section class="next-steps reveal-stagger">
 				<div class="link-item">
 					<a href="/blog/when-infrastructure-fails-quietly">When Infrastructure Fails Quietly</a>
 					<p class="description">How the 2003 Northeast Blackout reveals why monitoring systems must fail loudly.</p>

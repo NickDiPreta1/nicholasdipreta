@@ -169,7 +169,7 @@ const posts = (await getCollection('blog')).sort(
 		<Header />
 		<main>
 			<section>
-				<ul>
+				<ul class="reveal-stagger">
 					{
 						posts.map((post) => (
 							<li>
