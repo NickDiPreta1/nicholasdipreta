@@ -1,0 +1,101 @@
+---
+title: "Chesterton's Fence in Software Engineering"
+description: "Why you should understand existing code before deleting it, and how the instinct to 'clean up' can introduce the bugs it claims to prevent."
+pubDate: 'Jan 26 2026'
+---
+import SideNote from '../../components/SideNote.astro';
+
+In 1929, G.K. Chesterton described a principle that has aged remarkably well:
+
+> There exists in such a case a certain institution or law; let us say, for the sake of simplicity, a fence or gate erected across a road. The more modern type of reformer goes gaily up to it and says, "I don't see the use of this; let us clear it away." To which the more intelligent type of reformer will do well to answer: "If you don't see the use of it, I certainly won't let you clear it away. Go away and think. Then, when you can come back and tell me that you do see the use of it, I may allow you to destroy it."
+
+The principle is not that fences should never be removed. It is that you must first understand why the fence was built before you can responsibly decide whether it should stay.
+
+Software is full of fences.
+
+---
+
+## The fence you didn't recognize
+
+Every codebase of sufficient age contains code that looks wrong. A conditional that seems redundant. A delay that appears unnecessary. A check that handles a case you're certain can never happen. A comment that says `// DO NOT REMOVE` with no further explanation.<SideNote number={1}>The worst version of this is when the comment *did* have an explanation, but it was removed in a later commit by someone who thought the comment was "too verbose." The fence remains, but its purpose has been erased.</SideNote>
+
+The instinct of a capable engineer encountering such code is often to clean it up. The logic seems clear: simpler is better, dead code is debt, and clarity improves maintainability. All of these statements are true in general. But they become dangerous when applied to code whose purpose is not yet understood.
+
+The history of software is littered with outages caused by removing "dead" code that turned out to be load-bearing.
+
+---
+
+## Why fences become invisible
+
+Fences in software tend to lose their legibility over time. There are predictable reasons for this:
+
+**1. The problem the fence solved no longer occurs.**
+A rate limiter was added because a specific client was hammering an endpoint. That client was fixed or deprecated years ago. The rate limiter remains, but no one remembers why it exists, because the problem it prevents no longer manifests. Remove the limiter, and you discover that a *different* client now exhibits the same behavior.
+
+**2. The fence predates the current team.**
+Institutional memory is fragile. The engineer who added a defensive check left the company. The ticket that motivated the change was in a previous issue tracker. The commit message says only "fix bug."<SideNote number={2}>Commit messages are one of the most undervalued forms of documentation. A message like "fix bug" forfeits an opportunity to leave context for future maintainers. A message like "Add nil check to prevent crash when upstream returns malformed response (see incident #1234)" preserves the reasoning that justifies the code.</SideNote>
+
+**3. The fence handles a rare edge case.**
+Some code exists to handle conditions that occur once a month, once a year, or only under specific timing conditions. If you've never seen the condition trigger, the code looks paranoid. But distributed systems, time zones, leap years, and race conditions do not care whether you have personally witnessed them.
+
+**4. The fence was a workaround for external behavior.**
+Sometimes code compensates for bugs or quirks in dependencies, third-party APIs, or operating system behavior. The workaround may look nonsensical in isolation because it *is* nonsensical—it exists only because something outside your control behaves strangely.
+
+---
+
+## An example: the sleep that saved the system
+
+Consider a function that includes a 200-millisecond delay before making a network call. A new engineer sees it during a performance review. The delay adds latency to every request. There is no comment explaining it. The engineer removes it, tests locally, sees no issues, and ships the change.
+
+Two weeks later, the system starts failing intermittently under load. Investigation reveals that a downstream service needs a brief window to complete an internal operation after returning a response. Without the delay, subsequent requests occasionally arrive before that operation finishes, causing silent data corruption.
+
+The original author added the sleep after debugging a production incident. They meant to add a comment. They meant to file a ticket to fix it properly. They got pulled onto another project. The fence remained, unexplained, doing its job invisibly—until it was removed by someone who reasonably concluded it served no purpose.
+
+This is not a story about blame. It is a story about how the absence of documented reasoning makes responsible maintenance nearly impossible.
+
+---
+
+## The ethical dimension
+
+Chesterton's Fence is usually framed as a practical heuristic: understand before you change. But there is an ethical dimension as well.
+
+When you modify a system you do not fully understand, you are making a decision on behalf of future users and maintainers. You are asserting, implicitly, that your understanding is sufficient to predict the consequences. If that assertion is wrong, the cost is borne by others: the on-call engineer paged at 3 AM, the user whose data is corrupted, the team that spends days debugging a regression.
+
+Responsible engineering means acknowledging uncertainty. It means pausing when you encounter code that seems pointless and asking: *What would have to be true for this to make sense?*
+
+Sometimes the answer is "nothing—this really is dead code." But the process of asking the question is itself valuable. It is the difference between informed removal and hopeful deletion.
+
+---
+
+## Practices that preserve fences
+
+If fences become invisible through lost context, the solution is to preserve context more deliberately:
+
+**Write commit messages that explain why, not just what.**
+Future maintainers can see *what* changed by reading the diff. What they cannot see is *why* it changed. A commit message is an opportunity to record the reasoning that justifies the code.
+
+**Link to incidents, tickets, or discussions.**
+If code was added in response to a specific event, reference it. Even if the ticketing system changes, a searchable phrase like "incident 2024-03-15 payment timeout" gives future readers a starting point.
+
+**Add comments for non-obvious defensive code.**
+Not every line needs a comment. But code that handles rare edge cases, compensates for external behavior, or exists for reasons that are not self-evident should explain itself. The comment is part of the fence.
+
+**Use feature flags and gradual rollouts when removing old code.**<SideNote number={3}>This is especially important when removing code that has been in production for a long time. A gradual rollout lets you observe whether the removal causes problems before it affects all users. It converts a binary decision into a reversible experiment.</SideNote>
+If you're not certain whether code is still needed, remove it in a way that can be reversed quickly. Monitor for regressions. Let production tell you whether the fence was load-bearing.
+
+**Ask before you delete.**
+If someone is still at the company who might know why code exists, ask them. A five-minute conversation can prevent a week of debugging.
+
+---
+
+## The deeper lesson
+
+Chesterton's Fence is ultimately about epistemic humility. It is a reminder that your current understanding of a system is incomplete, and that the people who came before you were not fools.
+
+This does not mean old code is sacred. It does not mean systems should never be simplified. It means that simplification should be an act of understanding, not an act of dismissal.
+
+The engineer who removes a fence after understanding why it was built is doing maintenance.
+
+The engineer who removes a fence because they cannot imagine why it was built is gambling.
+
+Both may produce the same diff. Only one is responsible engineering.
