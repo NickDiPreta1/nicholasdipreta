@@ -46,10 +46,13 @@ const posts = (await getCollection('blog')).sort(
 			/* Blog post cards */
 			ul li {
 				width: calc(50% - 0.75rem);
+				display: flex;
 			}
 
 			ul li a {
-				display: block;
+				display: flex;
+				flex-direction: column;
+				width: 100%;
 				padding: 1.25rem;
 				background: var(--surface);
 				border: 1px solid var(--border-subtle);
@@ -114,7 +117,8 @@ const posts = (await getCollection('blog')).sort(
 				background: linear-gradient(
 					135deg,
 					var(--accent-subtle) 0%,
-					rgba(var(--gray-light), 0.3) 100%
+					var(--accent-subtle) 30%,
+					var(--surface) 100%
 				);
 				border: 1px solid rgba(35, 55, 255, 0.2);
 			}

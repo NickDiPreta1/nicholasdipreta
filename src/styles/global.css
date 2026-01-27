@@ -89,6 +89,8 @@
 html {
 	scroll-behavior: smooth;
 	overflow-x: hidden;
+	height: 100%;
+	background-color: var(--surface);
 }
 
 body {
@@ -97,9 +99,14 @@ body {
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 100%;
-	min-height: 100vh;
+	background-color: var(--surface);
+	background-image: linear-gradient(var(--gray-gradient));
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100vw 100vh;
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
@@ -112,6 +119,7 @@ main {
 	width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
+	flex: 1;
 }
 
 h1,
