@@ -25,8 +25,7 @@
 			el.style.display = hasPostNav ? 'flex' : 'none';
 		});
 	}
-	document.addEventListener('DOMContentLoaded', updateShortcutsVisibility);
-	document.addEventListener('astro:page-load', updateShortcutsVisibility);
+	updateShortcutsVisibility();
 </script>
 
 <style>

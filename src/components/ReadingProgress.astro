@@ -69,9 +69,5 @@
 		}
 
 		initReadingProgress();
-		if (!window.__readingProgressInit) {
-			document.addEventListener('astro:page-load', initReadingProgress);
-			window.__readingProgressInit = true;
-		}
 	})();
 </script>

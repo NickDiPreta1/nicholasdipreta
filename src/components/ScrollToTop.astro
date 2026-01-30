@@ -89,9 +89,5 @@
 		}
 
 		initScrollToTop();
-		if (!window.__scrollTopInit) {
-			document.addEventListener('astro:page-load', initScrollToTop);
-			window.__scrollTopInit = true;
-		}
 	})();
 </script>

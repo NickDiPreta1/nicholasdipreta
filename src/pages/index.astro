@@ -149,14 +149,14 @@ const posts = (await getCollection('blog'))
 	<body>
 		<Header />
 		<main>
-			<section class="hero reveal">
+			<section class="hero">
 				<h1>Nick DiPreta</h1>
 				<p class="subtitle">Software engineer studying ethical responsibility in software systems</p>
 				<p>I write about how design decisions in software and AI shape accountability, redistribute risk, and influence real-world outcomes. This site is a place for case-based analyses of software failures and how ethical responsibility gets embedded, deferred, or obscured in technical systems.</p>
 				<p>Outside of work, I read a lot of fantasy and books about software. I'm slowly building this site into a more complete picture of who I am—what I'm reading, how I'm training, what I'm tracking.</p>
 			</section>
 
-			<section class="next-steps reveal-stagger">
+			<section class="next-steps">
 				{posts.map((post) => (
 					<div class="link-item">
 						<a href={`/blog/${post.id}`}>{post.data.title}</a>
