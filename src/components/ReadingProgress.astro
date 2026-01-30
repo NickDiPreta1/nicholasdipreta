@@ -39,6 +39,7 @@
 			if (!bar) return;
 			bar.style.width = '0%';
 
+			var ticking = false;
 			function update() {
 				var article = document.querySelector('article');
 				if (!article) { bar.style.width = '0%'; return; }
@@ -50,10 +51,18 @@
 				var end = articleTop + articleHeight - windowHeight;
 				var progress = Math.min(Math.max((window.scrollY - start) / (end - start), 0), 1);
 				bar.style.width = (progress * 100) + '%';
+				ticking = false;
 			}
 
-			scrollHandler = update;
-			resizeHandler = update;
+			function onScroll() {
+				if (!ticking) {
+					requestAnimationFrame(update);
+					ticking = true;
+				}
+			}
+
+			scrollHandler = onScroll;
+			resizeHandler = onScroll;
 			window.addEventListener('scroll', scrollHandler, { passive: true });
 			window.addEventListener('resize', resizeHandler, { passive: true });
 			update();

@@ -66,7 +66,8 @@
 
 @font-face {
 	font-family: "Atkinson";
-	src: url("/fonts/atkinson-regular.woff") format("woff");
+	src: url("/fonts/atkinson-regular.woff2") format("woff2"),
+		url("/fonts/atkinson-regular.woff") format("woff");
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
@@ -74,7 +75,8 @@
 
 @font-face {
 	font-family: "Atkinson";
-	src: url("/fonts/atkinson-bold.woff") format("woff");
+	src: url("/fonts/atkinson-bold.woff2") format("woff2"),
+		url("/fonts/atkinson-bold.woff") format("woff");
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
@@ -161,18 +163,17 @@ b {
 /* Links - Animated underline effect */
 a {
 	color: var(--accent);
-	text-decoration: none;
-	background-image: linear-gradient(var(--accent-light), var(--accent-light));
-	background-size: 0% 2px;
-	background-position: 0 100%;
-	background-repeat: no-repeat;
+	text-decoration: underline;
+	text-decoration-color: transparent;
+	text-underline-offset: 3px;
+	text-decoration-thickness: 2px;
 	transition: color var(--transition-fast),
-		background-size var(--transition-base) ease-out;
+		text-decoration-color var(--transition-base) ease-out;
 }
 
 a:hover {
 	color: var(--accent-light);
-	background-size: 100% 2px;
+	text-decoration-color: var(--accent-light);
 }
 
 a:active {
