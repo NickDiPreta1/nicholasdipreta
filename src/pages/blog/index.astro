@@ -59,15 +59,15 @@ const posts = (await getCollection('blog')).sort(
 				border: 1px solid var(--border-subtle);
 				border-radius: 16px;
 				text-decoration: none;
-				transition: border-color var(--transition-base),
-					box-shadow var(--transition-base),
-					transform var(--transition-base);
+				transition: border-color var(--transition-fast),
+					box-shadow var(--transition-fast),
+					transform var(--transition-fast);
 			}
 
 			ul li a:hover {
 				border-color: var(--accent);
-				box-shadow: var(--shadow-hover);
-				transform: translateY(-4px);
+				box-shadow: var(--shadow-md);
+				transform: translateY(-2px);
 			}
 
 			ul li a:focus-visible {
@@ -79,11 +79,6 @@ const posts = (await getCollection('blog')).sort(
 				width: 100%;
 				margin-bottom: 1rem;
 				border-radius: 12px;
-				transition: transform var(--transition-base);
-			}
-
-			ul li a:hover img {
-				transform: scale(1.02);
 			}
 
 			.title {
@@ -115,17 +110,6 @@ const posts = (await getCollection('blog')).sort(
 
 			ul li:first-child a {
 				padding: 1.5rem;
-				background: linear-gradient(
-					135deg,
-					var(--accent-subtle) 0%,
-					var(--accent-subtle) 30%,
-					var(--surface) 100%
-				);
-				border: 1px solid rgba(35, 55, 255, 0.2);
-			}
-
-			ul li:first-child a:hover {
-				border-color: var(--accent);
 			}
 
 			ul li:first-child img {

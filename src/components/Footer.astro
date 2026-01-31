@@ -29,58 +29,38 @@ const today = new Date();
 </footer>
 <style>
 	footer {
-		padding: 3em 1em 4em 1em;
-		background: linear-gradient(
-			to bottom,
-			transparent 0%,
-			rgba(var(--gray-light), 0.5) 20%,
-			rgba(var(--gray-light), 0.7) 100%
-		);
+		padding: 2em 1em;
 		color: rgb(var(--gray));
 		text-align: center;
-		font-size: 0.9em;
+		font-size: 0.85em;
 		border-top: 1px solid var(--border-subtle);
 	}
 
 	.social-links {
 		display: flex;
 		justify-content: center;
-		gap: 0.75em;
-		margin-top: 1.25em;
+		gap: 1em;
+		margin-top: 0.75em;
 	}
 
 	.social-links a {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 44px;
-		height: 44px;
-		border-radius: 50%;
+		padding: 0.4em;
+		border-radius: 6px;
 		text-decoration: none;
 		color: rgb(var(--gray));
-		background: var(--surface);
-		box-shadow: var(--shadow-sm);
-		transition: color var(--transition-fast),
-			background-color var(--transition-fast),
-			box-shadow var(--transition-fast),
-			transform var(--transition-fast);
+		transition: color var(--transition-fast);
 	}
 
 	.social-links a:hover {
 		color: var(--accent);
-		background: var(--surface);
-		box-shadow: var(--shadow-md);
-		transform: translateY(-2px);
 	}
 
 	.social-links a:focus-visible {
 		outline: 2px solid var(--accent);
 		outline-offset: 2px;
-	}
-
-	.social-links a:active {
-		transform: translateY(0);
-		box-shadow: var(--shadow-sm);
 	}
 
 	.social-links svg {

@@ -6,11 +6,11 @@
 
 :root {
 	/* Primary accent colors */
-	--accent: #2337ff;
-	--accent-light: #4d5eff;
-	--accent-dark: #1a2acc;
-	--accent-subtle: rgba(35, 55, 255, 0.08);
-	--accent-glow: rgba(35, 55, 255, 0.15);
+	--accent: #4a5ae8;
+	--accent-light: #6370ee;
+	--accent-dark: #3a48c9;
+	--accent-subtle: rgba(74, 90, 232, 0.08);
+	--accent-glow: rgba(74, 90, 232, 0.12);
 
 	/* Grays */
 	--black: 15, 18, 25;
@@ -35,13 +35,13 @@
 		0 2px 4px rgba(var(--gray), 6%);
 	--shadow-lg: 0 10px 25px rgba(var(--gray), 15%),
 		0 6px 10px rgba(var(--gray), 10%);
-	--shadow-hover: 0 14px 28px rgba(var(--gray), 18%),
-		0 10px 10px rgba(var(--gray), 12%);
+	--shadow-hover: 0 10px 20px rgba(var(--gray), 14%),
+		0 6px 8px rgba(var(--gray), 10%);
 
 	/* Transitions */
-	--transition-fast: 150ms ease;
-	--transition-base: 200ms ease;
-	--transition-slow: 300ms ease;
+	--transition-fast: 100ms ease;
+	--transition-base: 150ms ease;
+	--transition-slow: 200ms ease;
 }
 
 /* Dark mode */
@@ -49,8 +49,8 @@
 	--accent: #6b7aff;
 	--accent-light: #8b96ff;
 	--accent-dark: #4d5eff;
-	--accent-subtle: rgba(107, 122, 255, 0.15);
-	--accent-glow: rgba(107, 122, 255, 0.25);
+	--accent-subtle: rgba(139, 150, 255, 0.12);
+	--accent-glow: rgba(139, 150, 255, 0.2);
 
 	--black: 248, 250, 252;
 	--gray: 180, 190, 210;
@@ -98,7 +98,7 @@
 }
 
 html {
-	scroll-behavior: smooth;
+	/* scroll-behavior left as default (instant) for snappier navigation */
 	overflow-x: hidden;
 	height: 100%;
 	background-color: var(--surface);
@@ -141,27 +141,32 @@ h5,
 h6 {
 	margin: 0 0 0.5rem 0;
 	color: rgb(var(--black));
-	line-height: 1.2;
+	line-height: 1.15;
 }
 
 h1 {
-	font-size: 3.052em;
+	font-size: 2.75em;
+	letter-spacing: -0.02em;
 }
 
 h2 {
-	font-size: 2.441em;
+	font-size: 2em;
+	font-weight: 600;
+	letter-spacing: -0.02em;
 }
 
 h3 {
-	font-size: 1.953em;
+	font-size: 1.6em;
+	font-weight: 600;
 }
 
 h4 {
-	font-size: 1.563em;
+	font-size: 1.35em;
+	font-weight: 600;
 }
 
 h5 {
-	font-size: 1.25em;
+	font-size: 1.15em;
 }
 
 strong,
@@ -177,12 +182,12 @@ a {
 	text-underline-offset: 3px;
 	text-decoration-thickness: 2px;
 	transition: color var(--transition-fast),
-		text-decoration-color var(--transition-base) ease-out;
+		text-decoration-color var(--transition-fast);
 }
 
 a:hover {
-	color: var(--accent-light);
-	text-decoration-color: var(--accent-light);
+	color: var(--accent);
+	text-decoration-color: var(--accent);
 }
 
 a:active {

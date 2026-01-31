@@ -37,11 +37,10 @@
 	#theme-toggle:hover {
 		color: rgb(var(--gray-dark));
 		background-color: rgb(var(--gray-light));
-		transform: scale(1.1);
 	}
 
 	#theme-toggle svg {
-		transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	#theme-toggle.switching svg {
@@ -95,7 +94,7 @@
 
 		btn.addEventListener('click', function() {
 			btn.classList.add('switching');
-			setTimeout(function() { btn.classList.remove('switching'); }, 500);
+			setTimeout(function() { btn.classList.remove('switching'); }, 250);
 
 			var isDark = document.documentElement.classList.contains('dark');
 			var newTheme = isDark ? 'light' : 'dark';

@@ -35,27 +35,27 @@ function initKeyboardShortcuts() {
 				);
 				console.log(
 					'%ct %c→ toggle theme',
-					'color: #2337ff; font-weight: bold;',
+					'color: #4a5ae8; font-weight: bold;',
 					'color: inherit;',
 				);
 				console.log(
 					'%ch %c→ go home',
-					'color: #2337ff; font-weight: bold;',
+					'color: #4a5ae8; font-weight: bold;',
 					'color: inherit;',
 				);
 				console.log(
 					'%cb %c→ go to blog',
-					'color: #2337ff; font-weight: bold;',
+					'color: #4a5ae8; font-weight: bold;',
 					'color: inherit;',
 				);
 				console.log(
 					'%cj %c→ next post',
-					'color: #2337ff; font-weight: bold;',
+					'color: #4a5ae8; font-weight: bold;',
 					'color: inherit;',
 				);
 				console.log(
 					'%ck %c→ previous post',
-					'color: #2337ff; font-weight: bold;',
+					'color: #4a5ae8; font-weight: bold;',
 					'color: inherit;',
 				);
 				break;
