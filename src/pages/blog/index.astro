@@ -96,6 +96,13 @@ const posts = (await getCollection('blog')).sort(
 				color: var(--accent);
 			}
 
+			.description {
+				margin: 0.25rem 0 0;
+				color: rgb(var(--gray));
+				font-size: 0.9rem;
+				line-height: 1.5;
+			}
+
 			.date {
 				margin: 0;
 				color: rgb(var(--gray));
@@ -176,6 +183,9 @@ const posts = (await getCollection('blog')).sort(
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
 									</p>
+									{post.data.description && (
+										<p class="description">{post.data.description}</p>
+									)}
 								</a>
 							</li>
 						))

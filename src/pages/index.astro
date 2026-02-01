@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const posts = (await getCollection('blog'))
@@ -108,12 +109,26 @@ const posts = (await getCollection('blog'))
 				opacity: 1;
 			}
 
+			.link-item .date {
+				margin-top: 0.25rem;
+				margin-bottom: 0;
+				color: rgb(var(--gray));
+				font-size: 0.85rem;
+			}
+
 			.link-item .description {
 				margin-top: 0.5rem;
 				margin-bottom: 0;
 				color: rgb(var(--gray));
 				line-height: 1.6;
 				font-size: 0.95rem;
+			}
+
+			.view-all {
+				display: inline-block;
+				margin-top: 1.5rem;
+				font-size: 0.95rem;
+				font-weight: 500;
 			}
 
 			/* Mobile responsive styles */
@@ -143,6 +158,9 @@ const posts = (await getCollection('blog'))
 				.link-item .description {
 					font-size: 0.9rem;
 				}
+				.view-all {
+					font-size: 0.9rem;
+				}
 			}
 		</style>
 	</head>
@@ -160,9 +178,12 @@ const posts = (await getCollection('blog'))
 				{posts.map((post) => (
 					<div class="link-item">
 						<a href={`/blog/${post.id}`}>{post.data.title}</a>
+						<p class="date"><FormattedDate date={post.data.pubDate} /></p>
 						<p class="description">{post.data.description}</p>
 					</div>
 				))}
+
+				<a href="/blog" class="view-all">View all posts</a>
 
 				<div class="link-item">
 					<a href="/about">About</a>
