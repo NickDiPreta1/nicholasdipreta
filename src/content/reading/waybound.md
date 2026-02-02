@@ -2,7 +2,7 @@
 title: "Waybound"
 author: "Will Wight"
 category: "fantasy"
-status: "completed"
+status: "finished"
 rating: 5
 ---
 
