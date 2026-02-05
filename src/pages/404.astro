@@ -3,6 +3,11 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE } from '../consts';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
 <!doctype html>
@@ -20,13 +25,31 @@ import { SITE_TITLE } from '../consts';
 				padding: 2rem;
 			}
 
+			.error-section {
+				animation: fadeUp 0.4s ease both;
+			}
+
+			@keyframes fadeUp {
+				from {
+					opacity: 0;
+					transform: translateY(12px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
 			.error-code {
 				font-size: 8rem;
 				font-weight: 700;
 				line-height: 1;
-				color: var(--accent);
 				margin: 0;
 				letter-spacing: -0.05em;
+				background: linear-gradient(135deg, var(--accent), var(--accent-light));
+				-webkit-background-clip: text;
+				background-clip: text;
+				-webkit-text-fill-color: transparent;
 			}
 
 			h1 {
@@ -35,10 +58,11 @@ import { SITE_TITLE } from '../consts';
 				color: rgb(var(--black));
 			}
 
-			p {
+			.subtitle {
 				color: rgb(var(--gray));
 				margin: 0 0 2rem;
-				max-width: 400px;
+				max-width: 420px;
+				line-height: 1.6;
 			}
 
 			.links {
@@ -46,6 +70,7 @@ import { SITE_TITLE } from '../consts';
 				gap: 1rem;
 				flex-wrap: wrap;
 				justify-content: center;
+				margin-bottom: 3rem;
 			}
 
 			.links a {
@@ -56,7 +81,7 @@ import { SITE_TITLE } from '../consts';
 				border-radius: 8px;
 				text-decoration: none;
 				font-weight: 500;
-				transition: background var(--transition-fast), transform var(--transition-fast);
+				transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 			}
 
 			.links a.primary {
@@ -67,6 +92,7 @@ import { SITE_TITLE } from '../consts';
 			.links a.primary:hover {
 				background: var(--accent-dark);
 				transform: translateY(-1px);
+				box-shadow: var(--shadow-md);
 			}
 
 			.links a.secondary {
@@ -80,6 +106,72 @@ import { SITE_TITLE } from '../consts';
 				transform: translateY(-1px);
 			}
 
+			.recent-posts {
+				width: 100%;
+				max-width: 480px;
+				text-align: left;
+				animation: fadeUp 0.4s ease 0.15s both;
+			}
+
+			.recent-posts h2 {
+				font-size: 0.85rem;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: rgb(var(--gray));
+				margin-bottom: 0.75rem;
+				font-weight: 600;
+			}
+
+			.recent-posts ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+
+			.recent-posts li a {
+				display: flex;
+				align-items: baseline;
+				justify-content: space-between;
+				gap: 1rem;
+				padding: 0.65rem 0.85rem;
+				border-radius: 8px;
+				text-decoration: none;
+				color: rgb(var(--gray-dark));
+				font-size: 0.95rem;
+				transition: background var(--transition-fast);
+			}
+
+			.recent-posts li a:hover {
+				background: var(--accent-subtle);
+				color: var(--accent);
+			}
+
+			.recent-posts li a time {
+				color: rgb(var(--gray));
+				font-size: 0.8rem;
+				white-space: nowrap;
+			}
+
+			.shortcut-hint {
+				margin-top: 2rem;
+				font-size: 0.8rem;
+				color: rgb(var(--gray));
+				animation: fadeUp 0.4s ease 0.3s both;
+			}
+
+			.shortcut-hint kbd {
+				display: inline-block;
+				padding: 0.15em 0.45em;
+				font-size: 0.85em;
+				font-family: inherit;
+				background: rgb(var(--gray-light));
+				border-radius: 4px;
+				border: 1px solid var(--border-subtle);
+			}
+
 			@media (max-width: 720px) {
 				.error-code {
 					font-size: 5rem;
@@ -88,19 +180,45 @@ import { SITE_TITLE } from '../consts';
 				h1 {
 					font-size: 1.25rem;
 				}
+
+				.recent-posts li a {
+					font-size: 0.9rem;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<p class="error-code">404</p>
-			<h1>Page not found</h1>
-			<p>The page you're looking for doesn't exist or has been moved.</p>
-			<div class="links">
-				<a href="/" class="primary">Go home</a>
-				<a href="/blog" class="secondary">Read the blog</a>
+			<div class="error-section">
+				<p class="error-code">404</p>
+				<h1>Page not found</h1>
+				<p class="subtitle">This page doesn't exist, or it was here once and has since been&nbsp;removed.</p>
+				<div class="links">
+					<a href="/" class="primary">Go home</a>
+					<a href="/blog" class="secondary">Read the blog</a>
+				</div>
 			</div>
+
+			<div class="recent-posts">
+				<h2>Recent writing</h2>
+				<ul>
+					{posts.map((post) => (
+						<li>
+							<a href={`/blog/${post.id}/`}>
+								<span>{post.data.title}</span>
+								<time datetime={post.data.pubDate.toISOString()}>
+									{post.data.pubDate.toLocaleDateString('en-us', { month: 'short', day: 'numeric' })}
+								</time>
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+
+			<p class="shortcut-hint">
+				Press <kbd>h</kbd> for home or <kbd>b</kbd> for blog
+			</p>
 		</main>
 		<Footer />
 	</body>
