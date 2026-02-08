@@ -15,7 +15,7 @@ const posts = (await getCollection('blog')).sort(
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`Blog | ${SITE_TITLE}`} description="Blog page" />
+		<BaseHead title={`Blog | ${SITE_TITLE}`} description="Essays on ethical responsibility in software systems — examining failures, accountability, and how design decisions shape real-world outcomes." />
 		<style>
 			main {
 				max-width: 960px;
@@ -25,9 +25,7 @@ const posts = (await getCollection('blog')).sort(
 			}
 
 			/* Page header */
-			section::before {
-				content: "Blog";
-				display: block;
+			.page-heading {
 				font-size: 2rem;
 				font-weight: 700;
 				color: rgb(var(--black));
@@ -136,7 +134,7 @@ const posts = (await getCollection('blog')).sort(
 				main {
 					padding: 2em 1em;
 				}
-				section::before {
+				.page-heading {
 					font-size: 1.5rem;
 					margin-bottom: 1.5rem;
 				}
@@ -165,6 +163,7 @@ const posts = (await getCollection('blog')).sort(
 		<Header />
 		<main>
 			<section>
+				<h1 class="page-heading">Blog</h1>
 				<ul>
 					{
 						posts.map((post) => (

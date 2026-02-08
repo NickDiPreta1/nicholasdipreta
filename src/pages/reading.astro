@@ -30,6 +30,7 @@ const finishedWithContent = await Promise.all(
 const categories = [...new Set(finishedBooks.map(b => b.data.category).filter(Boolean))] as string[];
 
 const currentYear = new Date().getFullYear();
+const finishedThisYear = finishedBooks.filter(b => b.data.finishedDate && b.data.finishedDate.getFullYear() === currentYear);
 ---
 
 <!doctype html>
@@ -44,9 +45,7 @@ const currentYear = new Date().getFullYear();
 				padding: 3em 1em;
 			}
 
-			section::before {
-				content: "Reading List";
-				display: block;
+			.page-heading {
 				font-size: 2rem;
 				font-weight: 700;
 				color: rgb(var(--black));
@@ -263,7 +262,7 @@ const currentYear = new Date().getFullYear();
 				main {
 					padding: 2em 1em;
 				}
-				section::before {
+				.page-heading {
 					font-size: 1.5rem;
 				}
 				.book-header {
@@ -284,6 +283,7 @@ const currentYear = new Date().getFullYear();
 		<Header />
 		<main>
 			<section>
+				<h1 class="page-heading">Reading List</h1>
 				<p class="intro">I read mostly fantasy and non-fiction.</p>
 
 				{currentlyReadingWithContent.length > 0 && (
@@ -316,7 +316,7 @@ const currentYear = new Date().getFullYear();
 					</div>
 				)}
 
-				<p class="subtitle"><span class="book-count">{finishedBooks.length}</span> books finished in {currentYear}</p>
+				<p class="subtitle"><span class="book-count">{finishedBooks.length}</span> books finished</p>
 
 				{categories.length > 0 && (
 					<div class="filter-tabs">
