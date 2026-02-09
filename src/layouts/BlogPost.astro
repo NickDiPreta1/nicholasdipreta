@@ -15,7 +15,7 @@ interface Props extends CollectionEntry<'blog'>['data'] {
 	nextPost?: { slug: string; title: string } | null;
 }
 
-const { title, description, pubDate, updatedDate, heroImage, readingTime, prevPost, nextPost } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, readingTime, prevPost, nextPost, tags = [] } = Astro.props;
 ---
 
 <!doctype html>
@@ -129,6 +129,31 @@ const { title, description, pubDate, updatedDate, heroImage, readingTime, prevPo
 
 			.reading-time {
 				color: rgb(var(--gray));
+			}
+
+			.tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+				justify-content: center;
+				margin-top: 0.75em;
+			}
+
+			.tag {
+				display: inline-flex;
+				align-items: center;
+				padding: 0.25em 0.75em;
+				font-size: 0.8rem;
+				color: var(--accent);
+				border: 1px solid var(--accent);
+				border-radius: 9999px;
+				text-decoration: none;
+				transition: background-color var(--transition-fast), color var(--transition-fast);
+			}
+
+			.tag:hover {
+				background-color: var(--accent);
+				color: white;
 			}
 
 			.post-nav {
@@ -295,6 +320,13 @@ const { title, description, pubDate, updatedDate, heroImage, readingTime, prevPo
 							}
 						</div>
 						<h1>{title}</h1>
+						{tags.length > 0 && (
+							<div class="tags">
+								{tags.map((tag: string) => (
+									<a href={`/blog/tags/${tag}`} class="tag">{tag}</a>
+								))}
+							</div>
+						)}
 						<hr />
 					</div>
 					<slot />
