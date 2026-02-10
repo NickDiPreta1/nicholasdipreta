@@ -6,11 +6,11 @@
 
 :root {
 	/* Primary accent colors */
-	--accent: #4a5ae8;
-	--accent-light: #6370ee;
-	--accent-dark: #3a48c9;
-	--accent-subtle: rgba(74, 90, 232, 0.08);
-	--accent-glow: rgba(74, 90, 232, 0.12);
+	--accent: #2d8c8c;
+	--accent-light: #3ba3a3;
+	--accent-dark: #1f6e6e;
+	--accent-subtle: rgba(45, 140, 140, 0.08);
+	--accent-glow: rgba(45, 140, 140, 0.12);
 
 	/* Grays */
 	--black: 15, 18, 25;
@@ -46,11 +46,11 @@
 
 /* Dark mode */
 .dark {
-	--accent: #6b7aff;
-	--accent-light: #8b96ff;
-	--accent-dark: #4d5eff;
-	--accent-subtle: rgba(139, 150, 255, 0.12);
-	--accent-glow: rgba(139, 150, 255, 0.2);
+	--accent: #4db8b8;
+	--accent-light: #7ad4d4;
+	--accent-dark: #3da0a0;
+	--accent-subtle: rgba(77, 184, 184, 0.12);
+	--accent-glow: rgba(77, 184, 184, 0.2);
 
 	--black: 248, 250, 252;
 	--gray: 180, 190, 210;
