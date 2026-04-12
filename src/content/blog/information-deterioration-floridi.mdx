@@ -1,0 +1,51 @@
+---
+title: "Information Deterioration and the Ethics of Entropy"
+description: "Luciano Floridi argues that the destruction of information is a form of moral harm. What does that mean for how we build and maintain systems?"
+pubDate: 'Apr 11 2026'
+tags: ["ethics", "information theory", "philosophy"]
+---
+import SideNote from '../../components/SideNote.astro';
+
+In the opening chapter of *The Fourth Revolution*, Luciano Floridi makes a claim that sounds simple but carries significant weight: information has intrinsic value, and its deterioration constitutes a form of harm.
+
+He is not writing about backup strategies or disk failures. He is making a philosophical argument about the moral status of information itself. Floridi introduces the concept of the *infosphere* — the informational environment in which we increasingly live and work — and argues that we have obligations toward it, just as we recognize obligations toward the physical environment.<SideNote number={1}>This is a departure from utilitarian frameworks, which evaluate information purely in terms of its usefulness. Floridi's position is closer to environmental ethics, where entities can have moral standing independent of human benefit. He is asking us to treat the infosphere with the same seriousness we are slowly learning to apply to the biosphere.</SideNote>
+
+I find this more compelling than I expected to. We already behave as though some information is sacred — think of how we treat the destruction of libraries or archives — but we resist extending that moral seriousness to the digital systems where most information now lives. Floridi is asking us to be consistent about an intuition we already have.
+
+---
+
+## What counts as deterioration
+
+Floridi identifies several forms of information entropy. **Destruction** is the obvious one: a database deleted, an archive burned, a format rendered unreadable. **Corruption** is subtler — information altered in ways that compromise its integrity without anyone noticing. **Pollution** is the introduction of false or misleading information that degrades the environment in which good information operates.
+
+But **inaccessibility** is the one I think most engineers should sit with. Information locked behind defunct authentication, stored in proprietary formats, buried under interfaces that no longer function — this is informationally equivalent to information that has been destroyed.<SideNote number={2}>If information is morally significant, then rendering it inaccessible through a platform change is not a neutral business decision. It requires justification, even if the data technically still exists on a server somewhere.</SideNote> The distinction between "deleted" and "practically unreachable" matters technically but not ethically.
+
+Inaccessibility is something we cause constantly and almost never frame as harm. Every API deprecation, every forced migration, every sunset announcement with a 30-day export window — these are acts of information deterioration that we dress up as product decisions. Floridi gives us the vocabulary for what is actually happening, and I think the vocabulary is correct.
+
+---
+
+## The entropy is not always accidental
+
+Much information deterioration is the result of deliberate choices. A company reduces log retention from seven years to ninety days. A platform changes its API, breaking every third-party archive that depended on it. A government digitizes paper records but does not fund maintenance of the digital system, so the new copies degrade while the originals have already been discarded.
+
+None of these decisions are irrational. But Floridi's framework insists they are decisions with moral content.
+
+This is where I think he is at his strongest. It is easy to agree in the abstract that information matters. It is much harder to maintain that conviction when someone shows you the storage bill. The value of his framework is that it refuses to let the cost argument close the discussion. In practice, cost usually wins. But there is a difference between cost winning after an honest accounting and cost winning because no one thought to count what was being lost.
+
+I have been in rooms where these decisions were made, and the moral dimension was never once on the table. The question was always cost, or liability, or engineering effort. Floridi would say that the moral dimension was present whether anyone acknowledged it or not — and I think he is right about that, even if I am less certain than he is about what follows from it.
+
+---
+
+## Where the framework falls short
+
+Floridi's argument implies positive obligations — not just refraining from destroying information, but actively preserving it. Here is where I start to push back. The framework is better at identifying the problem than at guiding action. Saying that information has intrinsic value does not tell you *how much* value, or how to weigh it against competing obligations. A company that retains everything in the name of preservation may also be hoarding personal data that people want deleted. The obligation to preserve and the obligation to respect privacy are genuinely in tension, and Floridi does not, at least in this chapter, resolve that tension in a way I find satisfying.<SideNote number={3}>Consider sunsetting a product. Users often lose not just a service but access to their own information — messages, creative work, records of activity. The information may be "theirs" legally, but if no export path exists, ownership is meaningless. The information deteriorates through institutional decision, not technical failure.</SideNote>
+
+The framework opens the right questions. It does not close them.
+
+---
+
+## What stays with me
+
+You do not need to adopt Floridi's entire philosophy to take something useful from it. The practical takeaway is simpler and, I think, more durable than the ontological argument beneath it: before you let information degrade, you should know what you are losing and who bears the cost.
+
+Most engineering cultures treat preservation as someone else's problem — the data team's, the archivist's, the compliance department's. Floridi's contribution is to argue that it is everyone's problem, that the entropy is not neutral, and that the systems we build are the terrain on which the fight against it is won or lost. I am not sure he is right about everything, but I am sure he is right about that.

@@ -184,6 +184,12 @@ const finishedThisYear = finishedBooks.filter(b => b.data.finishedDate && b.data
 				letter-spacing: 0.1em;
 			}
 
+			.half-star {
+				display: inline-block;
+				clip-path: inset(0 50% 0 0);
+				margin-right: -0.5em;
+			}
+
 			.book-category {
 				display: inline-block;
 				padding: 0.2rem 0.6rem;
@@ -348,7 +354,7 @@ const finishedThisYear = finishedBooks.filter(b => b.data.finishedDate && b.data
 										)}
 										{book.data.rating && (
 											<span class="book-rating">
-												{'★'.repeat(book.data.rating)}{'☆'.repeat(5 - book.data.rating)}
+												{'★'.repeat(Math.floor(book.data.rating))}{book.data.rating % 1 !== 0 ? <span class="half-star">★</span> : ''}{'☆'.repeat(5 - Math.ceil(book.data.rating))}
 											</span>
 										)}
 									</div>

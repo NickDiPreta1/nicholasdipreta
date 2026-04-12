@@ -1,8 +1,8 @@
 ---
-title: "The Blade Itself"
+title: "Before They Are Hanged"
 author: "Joe Abercrombie"
 category: "fantasy"
 status: "finished"
-rating: 3.5
-finishedDate: 2026-02-15
+rating: 3
+finishedDate: 2026-03-03
 ---
