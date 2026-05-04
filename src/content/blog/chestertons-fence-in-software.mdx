@@ -40,7 +40,7 @@ Institutional memory is fragile. The engineer who added a defensive check left t
 Some code exists to handle conditions that occur once a month, once a year, or only under specific timing conditions. If you've never seen the condition trigger, the code looks paranoid. But distributed systems, time zones, leap years, and race conditions do not care whether you have personally witnessed them.
 
 **4. The fence was a workaround for external behavior.**
-Sometimes code compensates for bugs or quirks in dependencies, third-party APIs, or operating system behavior. The workaround may look nonsensical in isolation because it *is* nonsensical—it exists only because something outside your control behaves strangely.
+Sometimes code compensates for bugs or quirks in dependencies, third-party APIs, or operating system behavior. The workaround may look nonsensical in isolation because it *is* nonsensical. It exists only because something outside your control behaves strangely.
 
 ---
 
@@ -50,7 +50,7 @@ Consider a function that includes a 200-millisecond delay before making a networ
 
 Two weeks later, the system starts failing intermittently under load. Investigation reveals that a downstream service needs a brief window to complete an internal operation after returning a response. Without the delay, subsequent requests occasionally arrive before that operation finishes, causing silent data corruption.
 
-The original author added the sleep after debugging a production incident. They meant to add a comment. They meant to file a ticket to fix it properly. They got pulled onto another project. The fence remained, unexplained, doing its job invisibly—until it was removed by someone who reasonably concluded it served no purpose.
+The original author added the sleep after debugging a production incident. They meant to add a comment. They meant to file a ticket to fix it properly. They got pulled onto another project. The fence remained, unexplained, doing its job invisibly, until it was removed by someone who reasonably concluded it served no purpose.
 
 This is not a story about blame. It is a story about how the absence of documented reasoning makes responsible maintenance nearly impossible.
 
@@ -64,7 +64,7 @@ When you modify a system you do not fully understand, you are making a decision 
 
 Responsible engineering means acknowledging uncertainty. It means pausing when you encounter code that seems pointless and asking: *What would have to be true for this to make sense?*
 
-Sometimes the answer is "nothing—this really is dead code." But the process of asking the question is itself valuable. It is the difference between informed removal and hopeful deletion.
+Sometimes the answer is "nothing, this really is dead code." But the process of asking the question is itself valuable. It is the difference between informed removal and hopeful deletion.
 
 ---
 
